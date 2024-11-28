@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/back">
+        <file>image/mian_back.png</file>
+        <file>image/net_back.jpg</file>
+        <file>image/back.jpg</file>
+        <file>image/main.jpg</file>
+        <file>image/blue_color_back.png</file>
+        <file>image/box.png</file>
+        <file>image/switch_on.png</file>
+        <file>image/switch_off.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file>fonts/simsun.ttc</file>
+    </qresource>
+</RCC>

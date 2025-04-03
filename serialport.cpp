@@ -298,6 +298,7 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                         rain_data_reset = data_result.data_rain_total - data_result.data_rain_history;
                         if(rain_data_reset < 0)
                             rain_data_reset = 0;
+                        serial_send_connect();//1778复位后，需要T113重新去握手
                     break;
                     //开入
                     case 0x01:
@@ -642,7 +643,11 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                     data_result.data_water = (data_res_float * calculate_485[0].multipy / calculate_485[0].divide + calculate_485[0].add - calculate_485[0].subtract) + data_result.data_water_base_value + data_result.data_water_modify_value;
 #ifdef FLOOD_FLOW
                                     //泄洪流量计算公式：Q=σs * μ0 * e * n * b * sqrt(2gH0)
-                                    data_result.data_flood_flow = ((0.97-0.81*acos((6.5-data_result.data_kdy_value/100)/9)/PI) - (0.56-0.81*acos((6.5-data_result.data_kdy_value/100)/9)/PI) * data_result.data_kdy_value/100/50) * data_result.data_kdy_value/100 * 1 * 5 * sqrt(2 * 9.8 * (data_result.data_water-360));
+
+                                    if(kdy.unit == "mm")
+                                        data_result.data_flood_flow = ((0.97-0.81*acos((6.5-data_result.data_kdy_value/1000)/9)/PI) - (0.56-0.81*acos((6.5-data_result.data_kdy_value/1000)/9)/PI) * data_result.data_kdy_value/1000/50) * data_result.data_kdy_value/1000 * 1 * 5 * sqrt(2 * 9.8 * (data_result.data_water-360));
+                                    else
+                                        data_result.data_flood_flow = ((0.97-0.81*acos((6.5-data_result.data_kdy_value/100)/9)/PI) - (0.56-0.81*acos((6.5-data_result.data_kdy_value/100)/9)/PI) * data_result.data_kdy_value/100/50) * data_result.data_kdy_value/100 * 1 * 5 * sqrt(2 * 9.8 * (data_result.data_water-360));
                                     if(qIsNaN(data_result.data_flood_flow))//计数错误
                                     {
                                         comm_error_count[6] ++;

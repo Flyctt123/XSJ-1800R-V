@@ -40,6 +40,7 @@ public slots:
 
 private:
     virtual void run();//任务处理线程
+    bool FindFileForDelete(const QString & path);//循环删除过期图片
 //    QSqlDatabase thread_data_base;// 用于建立和数据库的连接
 
 signals:

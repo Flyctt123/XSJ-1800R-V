@@ -19,7 +19,12 @@ extern uint8_t DO_Flag;//开出控制
 extern OSD_flag osd_flag;
 uint8_t log_max_M = 5;//日志最多存5M
 
-QString MainWindow::Version = "XSJ1800RV1.04A/D(NM.2024.01234.00)";
+#ifdef FLOOD_FLOW
+    QString MainWindow::Version = "XSJ1800RV1.04AD(NM.2024.01234.00)";//专版
+#else
+    QString MainWindow::Version = "XSJ1800RV1.03AD";//通用版
+#endif
+
 #ifdef ARM
     QSettings *MainWindow::iniFile = new QSettings("/home/Config.ini",QSettings::IniFormat);
     QString MainWindow::dbFile = "/home/MyDataBase.db";

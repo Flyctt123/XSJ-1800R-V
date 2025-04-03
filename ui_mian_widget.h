@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mian_widget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.5
+** Created by: Qt User Interface Compiler version 5.12.9
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -266,7 +266,7 @@ public:
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
         groupBox = new QGroupBox(tab_2);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(10, 10, 101, 171));
+        groupBox->setGeometry(QRect(10, 10, 71, 171));
         groupBox->setFont(font);
         label = new QLabel(groupBox);
         label->setObjectName(QString::fromUtf8("label"));
@@ -300,7 +300,7 @@ public:
         label_DI5->setGeometry(QRect(40, 140, 16, 17));
         groupBox_2 = new QGroupBox(tab_2);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(120, 10, 121, 171));
+        groupBox_2->setGeometry(QRect(90, 10, 121, 171));
         groupBox_2->setFont(font);
         label_6 = new QLabel(groupBox_2);
         label_6->setObjectName(QString::fromUtf8("label_6"));
@@ -340,7 +340,7 @@ public:
         label_11->setGeometry(QRect(12, 146, 28, 16));
         groupBox_5 = new QGroupBox(tab_2);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
-        groupBox_5->setGeometry(QRect(250, 10, 121, 171));
+        groupBox_5->setGeometry(QRect(220, 10, 151, 171));
         groupBox_5->setFont(font);
         label_19 = new QLabel(groupBox_5);
         label_19->setObjectName(QString::fromUtf8("label_19"));
@@ -379,7 +379,7 @@ public:
         label_kdy_error->setGeometry(QRect(60, 120, 16, 17));
         label_kdy_data = new QLabel(groupBox_5);
         label_kdy_data->setObjectName(QString::fromUtf8("label_kdy_data"));
-        label_kdy_data->setGeometry(QRect(60, 20, 51, 20));
+        label_kdy_data->setGeometry(QRect(60, 20, 81, 20));
         label_kdy_data->setStyleSheet(QString::fromUtf8(""));
         label_kdy_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         label_24 = new QLabel(groupBox_5);
@@ -520,7 +520,7 @@ public:
 
         retranslateUi(mian_widget);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(mian_widget);

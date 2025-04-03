@@ -10179,3 +10179,648 @@
 2024-11-21 11:40:30 Message:QIODevice::write (QSerialPort): device not open
 2024-11-21 11:40:30 Message:QIODevice::write (QSerialPort): device not open
 2024-11-21 11:40:32 Message:QThread: Destroyed while thread is still running
+2024-11-28 14:09:57 Message:Version= "XSJ1800RV1.04A/D(NM.2024.01234.00)"
+2024-11-28 14:09:58 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:09:58 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:09:58 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:09:58 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:01 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:01 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:02 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:02 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:07 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:07 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:08 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:08 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:31 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:31 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:32 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:32 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:38 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:38 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:39 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:39 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:42 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:42 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:43 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:43 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:46 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:46 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:47 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:47 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:50 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:50 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:51 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:51 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:54 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:54 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:55 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:55 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:58 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:58 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:59 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:10:59 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:01 Message:socket4 connected!
+2024-11-28 14:11:01 Message:socket1 connected!
+2024-11-28 14:11:01 Message:tcp_send= "7e7e01001122334404d22f000802000124112814110103f78d"
+2024-11-28 14:11:01 Message:socket5 connected!
+2024-11-28 14:11:01 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-11-28 14:11:02 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:02 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:03 Message:socket5 disconnected!
+2024-11-28 14:11:03 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:03 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:04 Message:socket4 disconnected!
+2024-11-28 14:11:06 Message:socket1 disconnected!
+2024-11-28 14:11:06 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:06 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:07 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:07 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:10 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:10 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:11 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:11 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:14 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:14 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:15 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:15 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:18 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:18 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:19 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:19 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:22 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:22 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:26 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:26 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:27 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:27 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:30 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:30 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:31 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:31 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:34 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:34 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:35 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:35 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:38 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:38 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:39 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:39 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:42 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:42 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:43 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:43 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:46 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:46 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:47 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:47 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:50 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:50 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:51 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:51 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:54 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:54 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:55 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:55 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:58 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:58 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:59 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:11:59 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:01 Message:socket1 connected!
+2024-11-28 14:12:01 Message:tcp_send= "7e7e01001122334404d22f000802000224112814120103e23d"
+2024-11-28 14:12:01 Message:socket5 connected!
+2024-11-28 14:12:01 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-11-28 14:12:01 Message:socket4 connected!
+2024-11-28 14:12:02 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:02 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:03 Message:socket5 disconnected!
+2024-11-28 14:12:03 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:03 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:04 Message:socket4 disconnected!
+2024-11-28 14:12:06 Message:socket1 disconnected!
+2024-11-28 14:12:06 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:06 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:07 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:07 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:10 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:10 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:11 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:11 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:14 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:14 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:15 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:15 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:18 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:18 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:19 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:19 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:22 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:22 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:26 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:26 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:27 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:27 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:30 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:30 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:31 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:31 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:34 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:34 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:35 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:35 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:38 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:38 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:39 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:39 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:42 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:42 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:43 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:43 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:46 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:46 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:47 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:12:47 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:10 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:10 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:12 Message:socket5 connected!
+2024-11-28 14:13:12 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-11-28 14:13:12 Message:socket4 connected!
+2024-11-28 14:13:12 Message:socket1 connected!
+2024-11-28 14:13:12 Message:tcp_send= "7e7e01001122334404d22f000802000324112814131203dea0"
+2024-11-28 14:13:15 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:15 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:15 Message:socket1 disconnected!
+2024-11-28 14:13:15 Message:socket4 disconnected!
+2024-11-28 14:13:15 Message:socket5 disconnected!
+2024-11-28 14:13:18 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:18 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:19 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:19 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:22 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:22 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:23 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:26 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:26 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:27 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:27 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:30 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:30 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:31 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:31 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:34 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:34 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:35 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:35 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:38 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:38 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:39 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:39 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:42 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:42 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:43 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:43 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:46 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:46 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:47 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:47 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:50 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:50 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:59 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:13:59 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:14:04 Message:socket4 connected!
+2024-11-28 14:14:04 Message:socket5 connected!
+2024-11-28 14:14:04 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-11-28 14:14:04 Message:socket1 connected!
+2024-11-28 14:14:04 Message:tcp_send= "7e7e01001122334404d22f000802000424112814140403995e"
+2024-11-28 14:14:05 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:14:05 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:14:06 Message:socket5 disconnected!
+2024-11-28 14:14:06 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:14:06 Message:QIODevice::write (QSerialPort): device not open
+2024-11-28 14:14:07 Message:socket4 disconnected!
+2024-12-23 10:09:03 Message:Version= "XSJ1800RV1.05A/D(NM.2024.01234.00)"
+2024-12-23 10:11:01 Message:socket1 connected!
+2024-12-23 10:11:01 Message:tcp_send= "7e7e01001122334404d22f0008020001241223101101033529"
+2024-12-23 10:11:01 Message:socket4 connected!
+2024-12-23 10:11:01 Message:socket5 connected!
+2024-12-23 10:11:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:11:04 Message:socket5 disconnected!
+2024-12-23 10:11:04 Message:socket4 disconnected!
+2024-12-23 10:11:07 Message:socket1 disconnected!
+2024-12-23 10:12:01 Message:socket1 connected!
+2024-12-23 10:12:01 Message:tcp_send= "7e7e01001122334404d22f0008020002241223101201032099"
+2024-12-23 10:12:01 Message:socket4 connected!
+2024-12-23 10:12:01 Message:socket5 connected!
+2024-12-23 10:12:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:12:04 Message:socket5 disconnected!
+2024-12-23 10:12:04 Message:socket4 disconnected!
+2024-12-23 10:12:07 Message:socket1 disconnected!
+2024-12-23 10:13:01 Message:socket4 connected!
+2024-12-23 10:13:01 Message:socket5 connected!
+2024-12-23 10:13:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:13:02 Message:socket1 connected!
+2024-12-23 10:13:02 Message:tcp_send= "7e7e01001122334404d22f000802000324122310130203dc09"
+2024-12-23 10:13:04 Message:socket5 disconnected!
+2024-12-23 10:13:04 Message:socket4 disconnected!
+2024-12-23 10:13:07 Message:socket1 disconnected!
+2024-12-23 10:14:01 Message:socket5 connected!
+2024-12-23 10:14:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:14:02 Message:socket4 connected!
+2024-12-23 10:14:02 Message:socket1 connected!
+2024-12-23 10:14:02 Message:tcp_send= "7e7e01001122334404d22f000802000424122310140203fbf9"
+2024-12-23 10:14:03 Message:lowPower on
+2024-12-23 10:14:04 Message:socket5 disconnected!
+2024-12-23 10:14:04 Message:socket4 disconnected!
+2024-12-23 10:14:07 Message:socket1 disconnected!
+2024-12-23 10:15:01 Message:tcp_SW_fixed_time_report
+2024-12-23 10:15:01 Message:socket1 connected!
+2024-12-23 10:15:01 Message:tcp_send= "7e7e01001122334404d22f0008020006241223101501031229"
+2024-12-23 10:15:01 Message:socket4 connected!
+2024-12-23 10:15:01 Message:socket5 connected!
+2024-12-23 10:15:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:15:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:15:02 Message:tcp_send= "681368b13201010700c00000000000010002151023007516"
+2024-12-23 10:15:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:15:02 Message:tcp_send= "681468b23201010700c0000000000000010002151023002316"
+2024-12-23 10:15:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:15:02 Message:tcp_send= "681a68b33201010700c0000000000000000000000000010002151023005016"
+2024-12-23 10:15:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:15:02 Message:tcp_send= "681368b43201010700c00000000000010002151023003e16"
+2024-12-23 10:15:04 Message:socket5 disconnected!
+2024-12-23 10:15:06 Message:socket1 disconnected!
+2024-12-23 10:15:07 Message:socket4 disconnected!
+2024-12-23 10:16:00 Message:TCP 1  ReConnect
+2024-12-23 10:16:01 Message:TCP 2  ReConnect
+2024-12-23 10:16:01 Message:TCP 3  ReConnect
+2024-12-23 10:16:01 Message:TCP 4  ReConnect
+2024-12-23 10:16:01 Message:socket5 connected!
+2024-12-23 10:16:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:16:02 Message:socket1 connected!
+2024-12-23 10:16:02 Message:tcp_send= "7e7e01001122334404d22f0008020007241223101602032e18"
+2024-12-23 10:16:02 Message:socket4 connected!
+2024-12-23 10:16:04 Message:socket5 disconnected!
+2024-12-23 10:16:04 Message:socket4 disconnected!
+2024-12-23 10:16:07 Message:socket1 disconnected!
+2024-12-23 10:17:01 Message:socket4 connected!
+2024-12-23 10:17:01 Message:socket5 connected!
+2024-12-23 10:17:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:17:02 Message:socket1 connected!
+2024-12-23 10:17:02 Message:tcp_send= "7e7e01001122334404d22f000802000824122310170203ae09"
+2024-12-23 10:17:04 Message:socket5 disconnected!
+2024-12-23 10:17:04 Message:socket4 disconnected!
+2024-12-23 10:17:07 Message:socket1 disconnected!
+2024-12-23 10:18:01 Message:socket1 connected!
+2024-12-23 10:18:01 Message:tcp_send= "7e7e01001122334404d22f00080200092412231018010391f8"
+2024-12-23 10:18:01 Message:socket5 connected!
+2024-12-23 10:18:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:18:02 Message:socket4 connected!
+2024-12-23 10:18:04 Message:socket5 disconnected!
+2024-12-23 10:18:04 Message:socket4 disconnected!
+2024-12-23 10:18:07 Message:socket1 disconnected!
+2024-12-23 10:19:01 Message:socket1 connected!
+2024-12-23 10:19:01 Message:tcp_send= "7e7e01001122334404d22f000802000a2412231019010344e9"
+2024-12-23 10:19:01 Message:socket5 connected!
+2024-12-23 10:19:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:19:02 Message:socket4 connected!
+2024-12-23 10:19:03 Message:lowPower on
+2024-12-23 10:19:04 Message:socket5 disconnected!
+2024-12-23 10:19:04 Message:socket4 disconnected!
+2024-12-23 10:19:07 Message:socket1 disconnected!
+2024-12-23 10:19:47 Message:lowPower off
+2024-12-23 10:20:01 Message:tcp_SW_fixed_time_report
+2024-12-23 10:20:01 Message:socket1 connected!
+2024-12-23 10:20:01 Message:tcp_send= "7e7e01001122334404d22f000802000c2412231020010363b9"
+2024-12-23 10:20:01 Message:socket4 connected!
+2024-12-23 10:20:01 Message:socket5 connected!
+2024-12-23 10:20:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:20:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:20:02 Message:tcp_send= "681368b13201010700c0000000000001000220102300c816"
+2024-12-23 10:20:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:20:02 Message:tcp_send= "681468b23201010700c0000000000000010002201023009e16"
+2024-12-23 10:20:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:20:02 Message:tcp_send= "681a68b33201010700c000000000000000000000000001000220102300ed16"
+2024-12-23 10:20:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:20:02 Message:tcp_send= "681368b43201010700c00000000000010002201023008316"
+2024-12-23 10:20:04 Message:socket5 disconnected!
+2024-12-23 10:20:07 Message:socket1 disconnected!
+2024-12-23 10:20:07 Message:socket4 disconnected!
+2024-12-23 10:21:00 Message:TCP 1  ReConnect
+2024-12-23 10:21:01 Message:TCP 2  ReConnect
+2024-12-23 10:21:01 Message:TCP 3  ReConnect
+2024-12-23 10:21:01 Message:TCP 4  ReConnect
+2024-12-23 10:21:01 Message:socket1 connected!
+2024-12-23 10:21:01 Message:tcp_send= "7e7e01001122334404d22f000802000d241223102101036f29"
+2024-12-23 10:21:01 Message:socket5 connected!
+2024-12-23 10:21:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:21:02 Message:socket4 connected!
+2024-12-23 10:21:04 Message:socket5 disconnected!
+2024-12-23 10:21:04 Message:socket4 disconnected!
+2024-12-23 10:21:07 Message:socket1 disconnected!
+2024-12-23 10:22:01 Message:socket1 connected!
+2024-12-23 10:22:01 Message:tcp_send= "7e7e01001122334404d22f000802000e241223102201037a99"
+2024-12-23 10:22:01 Message:socket5 connected!
+2024-12-23 10:22:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:22:02 Message:socket4 connected!
+2024-12-23 10:22:04 Message:socket5 disconnected!
+2024-12-23 10:22:04 Message:socket4 disconnected!
+2024-12-23 10:22:07 Message:socket1 disconnected!
+2024-12-23 10:23:01 Message:socket1 connected!
+2024-12-23 10:23:01 Message:tcp_send= "7e7e01001122334404d22f000802000f241223102301037609"
+2024-12-23 10:23:01 Message:socket5 connected!
+2024-12-23 10:23:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:23:02 Message:socket4 connected!
+2024-12-23 10:23:04 Message:socket5 disconnected!
+2024-12-23 10:23:04 Message:socket4 disconnected!
+2024-12-23 10:23:07 Message:socket1 disconnected!
+2024-12-23 10:24:01 Message:socket4 connected!
+2024-12-23 10:24:01 Message:socket1 connected!
+2024-12-23 10:24:01 Message:tcp_send= "7e7e01001122334404d22f000802001024122310240103fbf9"
+2024-12-23 10:24:01 Message:socket5 connected!
+2024-12-23 10:24:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:24:04 Message:socket5 disconnected!
+2024-12-23 10:24:04 Message:socket4 disconnected!
+2024-12-23 10:24:07 Message:socket1 disconnected!
+2024-12-23 10:24:54 Message:lowPower on
+2024-12-23 10:25:01 Message:tcp_SW_fixed_time_report
+2024-12-23 10:25:01 Message:socket4 connected!
+2024-12-23 10:25:01 Message:socket1 connected!
+2024-12-23 10:25:01 Message:tcp_send= "7e7e01001122334404d22f000802001224122310250103e229"
+2024-12-23 10:25:01 Message:socket5 connected!
+2024-12-23 10:25:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:25:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:25:02 Message:tcp_send= "681368b13201010700c0000000000001000225102300ba16"
+2024-12-23 10:25:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:25:02 Message:tcp_send= "681468b23201010700c000000000000001000225102300ec16"
+2024-12-23 10:25:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:25:02 Message:tcp_send= "681a68b33201010700c0000000000000000000000000010002251023009f16"
+2024-12-23 10:25:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:25:02 Message:tcp_send= "681368b43201010700c0000000000001000225102300f116"
+2024-12-23 10:25:04 Message:socket5 disconnected!
+2024-12-23 10:25:07 Message:socket1 disconnected!
+2024-12-23 10:25:07 Message:socket4 disconnected!
+2024-12-23 10:26:00 Message:TCP 1  ReConnect
+2024-12-23 10:26:01 Message:TCP 2  ReConnect
+2024-12-23 10:26:01 Message:TCP 3  ReConnect
+2024-12-23 10:26:01 Message:TCP 4  ReConnect
+2024-12-23 10:26:01 Message:socket5 connected!
+2024-12-23 10:26:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:26:02 Message:socket1 connected!
+2024-12-23 10:26:02 Message:tcp_send= "7e7e01001122334404d22f000802001324122310260203de18"
+2024-12-23 10:26:02 Message:socket4 connected!
+2024-12-23 10:26:04 Message:socket5 disconnected!
+2024-12-23 10:26:04 Message:socket4 disconnected!
+2024-12-23 10:26:07 Message:socket1 disconnected!
+2024-12-23 10:27:01 Message:socket1 connected!
+2024-12-23 10:27:01 Message:tcp_send= "7e7e01001122334404d22f0008020014241223102701030808"
+2024-12-23 10:27:01 Message:socket4 connected!
+2024-12-23 10:27:01 Message:socket5 connected!
+2024-12-23 10:27:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:27:04 Message:socket5 disconnected!
+2024-12-23 10:27:04 Message:socket4 disconnected!
+2024-12-23 10:27:07 Message:socket1 disconnected!
+2024-12-23 10:28:01 Message:socket1 connected!
+2024-12-23 10:28:01 Message:tcp_send= "7e7e01001122334404d22f000802001524122310280103c7f9"
+2024-12-23 10:28:01 Message:socket4 connected!
+2024-12-23 10:28:01 Message:socket5 connected!
+2024-12-23 10:28:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:28:04 Message:socket5 disconnected!
+2024-12-23 10:28:04 Message:socket4 disconnected!
+2024-12-23 10:28:07 Message:socket1 disconnected!
+2024-12-23 10:29:01 Message:socket4 connected!
+2024-12-23 10:29:01 Message:socket5 connected!
+2024-12-23 10:29:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:29:02 Message:socket1 connected!
+2024-12-23 10:29:02 Message:tcp_send= "7e7e01001122334404d22f000802001624122310290203e2e8"
+2024-12-23 10:29:04 Message:socket5 disconnected!
+2024-12-23 10:29:04 Message:socket4 disconnected!
+2024-12-23 10:29:07 Message:socket1 disconnected!
+2024-12-23 10:29:54 Message:lowPower on
+2024-12-23 10:30:01 Message:tcp_SW_fixed_time_report
+2024-12-23 10:30:01 Message:socket5 connected!
+2024-12-23 10:30:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:30:02 Message:socket1 connected!
+2024-12-23 10:30:02 Message:tcp_send= "7e7e01001122334404d22f000802001824122310300203a9b8"
+2024-12-23 10:30:02 Message:socket4 connected!
+2024-12-23 10:30:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:30:02 Message:tcp_send= "681368b13201010700c00000000000010002301023008d16"
+2024-12-23 10:30:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:30:02 Message:tcp_send= "681468b23201010700c000000000000001000230102300db16"
+2024-12-23 10:30:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:30:02 Message:tcp_send= "681a68b33201010700c000000000000000000000000001000230102300a816"
+2024-12-23 10:30:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:30:02 Message:tcp_send= "681368b43201010700c0000000000001000230102300c616"
+2024-12-23 10:30:04 Message:socket5 disconnected!
+2024-12-23 10:30:07 Message:socket1 disconnected!
+2024-12-23 10:30:07 Message:socket4 disconnected!
+2024-12-23 10:31:00 Message:TCP 1  ReConnect
+2024-12-23 10:31:01 Message:TCP 2  ReConnect
+2024-12-23 10:31:01 Message:TCP 3  ReConnect
+2024-12-23 10:31:01 Message:TCP 4  ReConnect
+2024-12-23 10:31:01 Message:socket5 connected!
+2024-12-23 10:31:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:31:02 Message:socket1 connected!
+2024-12-23 10:31:02 Message:tcp_send= "7e7e01001122334404d22f000802001924122310310203a528"
+2024-12-23 10:31:02 Message:socket4 connected!
+2024-12-23 10:31:04 Message:socket5 disconnected!
+2024-12-23 10:31:04 Message:socket4 disconnected!
+2024-12-23 10:31:07 Message:socket1 disconnected!
+2024-12-23 10:32:01 Message:socket5 connected!
+2024-12-23 10:32:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:32:02 Message:socket4 connected!
+2024-12-23 10:32:02 Message:socket1 connected!
+2024-12-23 10:32:02 Message:tcp_send= "7e7e01001122334404d22f000802001a24122310320203b098"
+2024-12-23 10:32:04 Message:socket5 disconnected!
+2024-12-23 10:32:04 Message:socket4 disconnected!
+2024-12-23 10:32:07 Message:socket1 disconnected!
+2024-12-23 10:33:01 Message:socket5 connected!
+2024-12-23 10:33:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:33:02 Message:socket1 connected!
+2024-12-23 10:33:02 Message:tcp_send= "7e7e01001122334404d22f000802001b24122310330203bc08"
+2024-12-23 10:33:02 Message:socket4 connected!
+2024-12-23 10:33:04 Message:socket5 disconnected!
+2024-12-23 10:33:04 Message:socket4 disconnected!
+2024-12-23 10:33:07 Message:socket1 disconnected!
+2024-12-23 10:34:01 Message:socket1 connected!
+2024-12-23 10:34:01 Message:tcp_send= "7e7e01001122334404d22f000802001c241223103401036bf8"
+2024-12-23 10:34:01 Message:socket5 connected!
+2024-12-23 10:34:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:34:02 Message:socket4 connected!
+2024-12-23 10:34:04 Message:socket5 disconnected!
+2024-12-23 10:34:04 Message:socket4 disconnected!
+2024-12-23 10:34:07 Message:socket1 disconnected!
+2024-12-23 10:34:54 Message:lowPower on
+2024-12-23 10:35:01 Message:tcp_SW_fixed_time_report
+2024-12-23 10:35:01 Message:socket4 connected!
+2024-12-23 10:35:01 Message:socket1 connected!
+2024-12-23 10:35:01 Message:tcp_send= "7e7e01001122334404d22f000802001e241223103501037228"
+2024-12-23 10:35:01 Message:socket5 connected!
+2024-12-23 10:35:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:35:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:35:02 Message:tcp_send= "681368b13201010700c0000000000001000235102300ff16"
+2024-12-23 10:35:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:35:02 Message:tcp_send= "681468b23201010700c000000000000001000235102300a916"
+2024-12-23 10:35:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:35:02 Message:tcp_send= "681a68b33201010700c000000000000000000000000001000235102300da16"
+2024-12-23 10:35:02 Message:tcp_SZY_fixed_time_report
+2024-12-23 10:35:02 Message:tcp_send= "681368b43201010700c0000000000001000235102300b416"
+2024-12-23 10:35:04 Message:socket5 disconnected!
+2024-12-23 10:35:06 Message:socket1 disconnected!
+2024-12-23 10:35:07 Message:socket4 disconnected!
+2024-12-23 10:36:00 Message:TCP 1  ReConnect
+2024-12-23 10:36:01 Message:TCP 2  ReConnect
+2024-12-23 10:36:01 Message:TCP 3  ReConnect
+2024-12-23 10:36:01 Message:TCP 4  ReConnect
+2024-12-23 10:36:01 Message:socket4 connected!
+2024-12-23 10:36:01 Message:socket5 connected!
+2024-12-23 10:36:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:36:02 Message:socket1 connected!
+2024-12-23 10:36:02 Message:tcp_send= "7e7e01001122334404d22f000802001f241223103602034e19"
+2024-12-23 10:36:04 Message:socket5 disconnected!
+2024-12-23 10:36:04 Message:socket4 disconnected!
+2024-12-23 10:36:07 Message:socket1 disconnected!
+2024-12-23 10:37:01 Message:socket4 connected!
+2024-12-23 10:37:01 Message:socket1 connected!
+2024-12-23 10:37:01 Message:tcp_send= "7e7e01001122334404d22f0008020020241223103701032a0b"
+2024-12-23 10:37:01 Message:socket5 connected!
+2024-12-23 10:37:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:37:04 Message:socket5 disconnected!
+2024-12-23 10:37:04 Message:socket4 disconnected!
+2024-12-23 10:37:07 Message:socket1 disconnected!
+2024-12-23 10:38:01 Message:socket4 connected!
+2024-12-23 10:38:01 Message:socket5 connected!
+2024-12-23 10:38:02 Message:tcp_send= "5aa5ffa001000000007b68"
+2024-12-23 10:38:02 Message:socket1 connected!
+2024-12-23 10:38:02 Message:tcp_send= "7e7e01001122334404d22f00080200212412231038020315fa"
+2024-12-23 10:38:04 Message:socket5 disconnected!
+2024-12-23 10:38:04 Message:socket4 disconnected!
+2024-12-23 10:38:07 Message:socket1 disconnected!
+2024-12-23 10:38:20 Message:QThread: Destroyed while thread is still running
+2024-12-23 13:42:39 Message:Version= "XSJ1800RV1.03A/D"
+2024-12-23 13:42:50 Message:QThread: Destroyed while thread is still running
+2024-12-23 13:44:06 Message:Version= "XSJ1800RV1.03A/D"
+2024-12-23 13:44:24 Message:QThread: Destroyed while thread is still running
+2024-12-23 13:46:44 Message:Version= "XSJ1800RV1.03A/D"
+2024-12-23 13:46:58 Message:QThread: Destroyed while thread is still running
+2024-12-23 13:47:30 Message:Version= "XSJ1800RV1.03A/D"
+2024-12-23 13:47:43 Message:QThread: Destroyed while thread is still running
+2024-12-23 14:53:00 Message:Version= "XSJ1800RV1.04AD(NM.2024.01234.00)"
+2024-12-23 14:53:01 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:01 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:02 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:02 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:05 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:05 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:06 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:06 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:09 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:09 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:10 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:10 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:13 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:13 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:14 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:14 Message:QIODevice::write (QSerialPort): device not open
+2024-12-23 14:53:17 Message:QThread: Destroyed while thread is still running
+2025-01-13 13:53:32 Message:Version= "XSJ1800RV1.05AD(NM.2024.01234.00)"
+2025-01-13 13:53:33 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:33 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:34 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:34 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:37 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:37 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:38 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:38 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:41 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:41 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:42 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:42 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:45 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:45 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:46 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:46 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:49 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:49 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:50 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:50 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:53 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:53 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:54 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:54 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:57 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:57 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:58 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:53:58 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:01 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:01 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:02 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:02 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:05 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:05 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:06 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:06 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:09 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:09 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:10 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:10 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:13 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:13 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 13:54:13 Message:QThread: Destroyed while thread is still running
+2025-01-13 14:00:04 Message:Version= "XSJ1800RV1.05AD(NM.2024.01234.00)"
+2025-01-13 14:00:05 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:05 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:06 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:06 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:09 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:09 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:10 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:10 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:13 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:13 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:14 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:14 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:17 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:17 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:18 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:18 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:21 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:21 Message:QIODevice::write (QSerialPort): device not open
+2025-01-13 14:00:21 Message:QThread: Destroyed while thread is still running
+2025-01-16 13:23:03 Message:Version= "XSJ1800RV1.03AD"
+2025-01-16 13:23:04 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:23:04 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:23:05 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:23:05 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:23:08 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:23:08 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:23:09 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:23:09 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:23:12 Message:QThread: Destroyed while thread is still running
+2025-01-16 13:23:59 Message:Version= "XSJ1800RV1.04AD(NM.2024.01234.00)"
+2025-01-16 13:24:00 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:00 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:01 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:01 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:04 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:04 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:05 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:05 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:08 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:08 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:09 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:09 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:24:11 Message:QThread: Destroyed while thread is still running
+2025-01-16 13:25:02 Message:Version= "XSJ1800RV1.03AD"
+2025-01-16 13:25:03 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:25:03 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:25:04 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:25:04 Message:QIODevice::write (QSerialPort): device not open
+2025-01-16 13:25:07 Message:QThread: Destroyed while thread is still running

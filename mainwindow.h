@@ -30,7 +30,7 @@
 //#define BRUN 1 //烧录模式
 #define ARM 1 //ARM环境
 #define RESEND 1 //补传功能
-#define FLOOD_FLOW 1 //泄洪流量计算
+//#define FLOOD_FLOW 1 //泄洪流量计算
 #define PI acos(-1)
 
 class MainWindow : public QMainWindow

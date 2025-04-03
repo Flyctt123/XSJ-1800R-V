@@ -468,51 +468,6 @@ void xitong_widget::on_usb_Button_data_clicked()
     sys_busy = false;
 }
 
-bool xitong_widget::FindFileForDelete(const QString &path)
-{
-    QDir dir(path);
-    if (!dir.exists())//不存在
-        return false;
-    dir.setFilter(QDir::Dirs|QDir::Files);//获取所有的文件夹和文件
-    dir.setSorting(QDir::DirsFirst);//文件夹排在前面
-    QFileInfoList list = dir.entryInfoList();//获取文件夹和文件列表
-    int i=0;
-    qDebug()<<"rm picture judge!";
-    do{
-
-        QFileInfo fileInfo = list.at(i);
-        if((fileInfo.fileName()==".") | (fileInfo.fileName()==".."))//去掉.和..文件夹，这是linux特有的
-        {
-               i++;
-               continue;
-        }
-        bool bisDir=fileInfo.isDir();
-        if(bisDir)//该路径是目录
-        {
-            FindFileForDelete(fileInfo.filePath());
-        }
-        else
-        {
-            //如果是文件，判断文件日期 目前默认是30天。
-           QDateTime delDateTime = QDateTime::currentDateTime().addDays(-30);
-           qDebug()<<"DEL DateTime="<<delDateTime;
-
-           qint64 nSecs = delDateTime.secsTo(fileInfo.created());//Linux 30天前的时间和该文件创建时间的差值秒
-           //qint64 nSecs = delDateTime.secsTo(fileInfo.birthTime());//Windows 30天前的时间和该文件创建时间的差值秒
-           qDebug()<<"cut Time="<<nSecs;
-           if (nSecs < 0)
-           {
-               qDebug()<<"rm SATRT";
-               //qDebug() << qPrintable(QString("%1 %2 %3").arg(fileInfo.size(), 10).arg(fileInfo.fileName(),10).arg(fileInfo.path()))<<endl;
-               //删除30天前的文件
-               fileInfo.dir().remove(fileInfo.fileName());
-           }
-        }
-        i++;
-    }while(i<list.size());
-    return true;
-}
-
 void xitong_widget::on_pushButton_restart_clicked()
 {
     QMessageBox *m_box = new QMessageBox(QMessageBox::Information,QString("提示"),QString("确认重启设备？"));
@@ -536,12 +491,6 @@ void xitong_widget::timerTimeout_hour()
 {
     if(QTime::currentTime().hour() == 0)
         emit check_time_signal(1);//每天0点校时
-#ifdef ARM
-    FindFileForDelete("/home/images/images1");
-#else
-    QString path = QDir::currentPath();
-    FindFileForDelete(path + "/home/images/images1");
-#endif
 }
 
 void xitong_widget::on_usb_Button_update_clicked()

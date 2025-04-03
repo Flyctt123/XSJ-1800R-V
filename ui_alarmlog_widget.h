@@ -130,7 +130,7 @@ public:
 
         retranslateUi(alarmLog_widget);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(alarmLog_widget);

@@ -37,7 +37,6 @@ private slots:
     void on_usb_Button_check_clicked();
     void on_usb_Button_data_clicked();
     void on_usb_Button_picture_clicked();
-    bool FindFileForDelete(const QString & path);
     void on_pushButton_restart_clicked();
     void timerTimeout_hour();
     void on_usb_Button_update_clicked();

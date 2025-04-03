@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'canshu_widget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.5
+** Created by: Qt User Interface Compiler version 5.12.9
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -15,6 +15,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -70,15 +71,17 @@ public:
     QLabel *label_33;
     QPushButton *pushButton_kdy_stop;
     QPushButton *pushButton_kdy_slave;
+    QLabel *label_31;
+    QComboBox *comboBox_kdUnit;
     QWidget *tab_3;
     QWidget *layoutWidget;
     QGridLayout *gridLayout_7;
-    QLabel *label;
     QLabel *label_2;
-    QLabel *label_5;
-    QLabel *label_6;
-    QLabel *label_7;
     QLabel *label_9;
+    QLabel *label_6;
+    QLabel *label;
+    QLabel *label_5;
+    QLabel *label_7;
     QWidget *layoutWidget1;
     QGridLayout *gridLayout;
     QRadioButton *radioButton1_vol;
@@ -96,13 +99,13 @@ public:
     QRadioButton *radioButton4_vol;
     QRadioButton *radioButton4_cur;
     QWidget *layoutWidget5;
-    QGridLayout *gridLayout_5;
-    QRadioButton *radioButton5_vol;
+    QHBoxLayout *horizontalLayout;
     QRadioButton *radioButton5_cur;
+    QRadioButton *radioButton5_vol;
     QWidget *layoutWidget6;
-    QGridLayout *gridLayout_6;
-    QRadioButton *radioButton6_vol;
+    QHBoxLayout *horizontalLayout_2;
     QRadioButton *radioButton6_cur;
+    QRadioButton *radioButton6_vol;
     QWidget *tab_2;
     QGroupBox *groupBox;
     QLabel *label_13;
@@ -372,30 +375,30 @@ public:
         lineEdit_kdy_downLimit->setGeometry(QRect(100, 110, 71, 21));
         label_30 = new QLabel(tab_5);
         label_30->setObjectName(QString::fromUtf8("label_30"));
-        label_30->setGeometry(QRect(190, 80, 81, 20));
+        label_30->setGeometry(QRect(180, 50, 101, 20));
         label_30->setFont(font2);
         label_30->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         lineEdit_kdy_data = new QLineEdit(tab_5);
         lineEdit_kdy_data->setObjectName(QString::fromUtf8("lineEdit_kdy_data"));
-        lineEdit_kdy_data->setGeometry(QRect(270, 80, 71, 21));
+        lineEdit_kdy_data->setGeometry(QRect(280, 50, 91, 21));
         label_32 = new QLabel(tab_5);
         label_32->setObjectName(QString::fromUtf8("label_32"));
-        label_32->setGeometry(QRect(190, 110, 81, 20));
+        label_32->setGeometry(QRect(200, 110, 81, 20));
         label_32->setFont(font2);
         label_32->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         lineEdit_kdy_time = new QLineEdit(tab_5);
         lineEdit_kdy_time->setObjectName(QString::fromUtf8("lineEdit_kdy_time"));
-        lineEdit_kdy_time->setGeometry(QRect(270, 110, 71, 21));
+        lineEdit_kdy_time->setGeometry(QRect(280, 110, 71, 21));
         pushButton_kdy_start = new QPushButton(tab_5);
         pushButton_kdy_start->setObjectName(QString::fromUtf8("pushButton_kdy_start"));
         pushButton_kdy_start->setGeometry(QRect(110, 150, 71, 28));
         pushButton_kdy_start->setFocusPolicy(Qt::NoFocus);
         label_33 = new QLabel(tab_5);
         label_33->setObjectName(QString::fromUtf8("label_33"));
-        label_33->setGeometry(QRect(346, 110, 21, 20));
+        label_33->setGeometry(QRect(360, 110, 21, 20));
         QFont font7;
         font7.setFamily(QString::fromUtf8("Times New Roman"));
-        font7.setPointSize(10);
+        font7.setPointSize(12);
         label_33->setFont(font7);
         label_33->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         pushButton_kdy_stop = new QPushButton(tab_5);
@@ -406,54 +409,65 @@ public:
         pushButton_kdy_slave->setObjectName(QString::fromUtf8("pushButton_kdy_slave"));
         pushButton_kdy_slave->setGeometry(QRect(290, 150, 71, 28));
         pushButton_kdy_slave->setFocusPolicy(Qt::NoFocus);
+        label_31 = new QLabel(tab_5);
+        label_31->setObjectName(QString::fromUtf8("label_31"));
+        label_31->setGeometry(QRect(200, 80, 81, 20));
+        label_31->setFont(font2);
+        label_31->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        comboBox_kdUnit = new QComboBox(tab_5);
+        comboBox_kdUnit->addItem(QString());
+        comboBox_kdUnit->addItem(QString());
+        comboBox_kdUnit->setObjectName(QString::fromUtf8("comboBox_kdUnit"));
+        comboBox_kdUnit->setGeometry(QRect(280, 80, 71, 22));
         tabWidget->addTab(tab_5, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
         layoutWidget = new QWidget(tab_3);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(30, 20, 96, 161));
+        layoutWidget->setGeometry(QRect(81, 11, 96, 171));
         gridLayout_7 = new QGridLayout(layoutWidget);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         gridLayout_7->setVerticalSpacing(3);
         gridLayout_7->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(layoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        gridLayout_7->addWidget(label, 0, 0, 1, 1);
-
         label_2 = new QLabel(layoutWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         gridLayout_7->addWidget(label_2, 1, 0, 1, 1);
-
-        label_5 = new QLabel(layoutWidget);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-
-        gridLayout_7->addWidget(label_5, 2, 0, 1, 1);
-
-        label_6 = new QLabel(layoutWidget);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-
-        gridLayout_7->addWidget(label_6, 3, 0, 1, 1);
-
-        label_7 = new QLabel(layoutWidget);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
-
-        gridLayout_7->addWidget(label_7, 4, 0, 1, 1);
 
         label_9 = new QLabel(layoutWidget);
         label_9->setObjectName(QString::fromUtf8("label_9"));
 
         gridLayout_7->addWidget(label_9, 5, 0, 1, 1);
 
+        label_6 = new QLabel(layoutWidget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+
+        gridLayout_7->addWidget(label_6, 3, 0, 1, 1);
+
+        label = new QLabel(layoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        gridLayout_7->addWidget(label, 0, 0, 1, 1);
+
+        label_5 = new QLabel(layoutWidget);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+
+        gridLayout_7->addWidget(label_5, 2, 0, 1, 1);
+
+        label_7 = new QLabel(layoutWidget);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+
+        gridLayout_7->addWidget(label_7, 4, 0, 1, 1);
+
         layoutWidget1 = new QWidget(tab_3);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(120, 23, 161, 21));
+        layoutWidget1->setGeometry(QRect(180, 10, 123, 21));
         gridLayout = new QGridLayout(layoutWidget1);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
         radioButton1_vol = new QRadioButton(layoutWidget1);
         radioButton1_vol->setObjectName(QString::fromUtf8("radioButton1_vol"));
+        radioButton1_vol->setEnabled(true);
         radioButton1_vol->setChecked(true);
 
         gridLayout->addWidget(radioButton1_vol, 0, 0, 1, 1);
@@ -466,12 +480,13 @@ public:
 
         layoutWidget2 = new QWidget(tab_3);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(120, 50, 161, 21));
+        layoutWidget2->setGeometry(QRect(180, 40, 123, 21));
         gridLayout_2 = new QGridLayout(layoutWidget2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
         radioButton2_vol = new QRadioButton(layoutWidget2);
         radioButton2_vol->setObjectName(QString::fromUtf8("radioButton2_vol"));
+        radioButton2_vol->setEnabled(true);
         radioButton2_vol->setChecked(true);
 
         gridLayout_2->addWidget(radioButton2_vol, 0, 0, 1, 1);
@@ -485,12 +500,13 @@ public:
 
         layoutWidget3 = new QWidget(tab_3);
         layoutWidget3->setObjectName(QString::fromUtf8("layoutWidget3"));
-        layoutWidget3->setGeometry(QRect(120, 77, 161, 21));
+        layoutWidget3->setGeometry(QRect(180, 70, 123, 21));
         gridLayout_3 = new QGridLayout(layoutWidget3);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
         radioButton3_vol = new QRadioButton(layoutWidget3);
         radioButton3_vol->setObjectName(QString::fromUtf8("radioButton3_vol"));
+        radioButton3_vol->setEnabled(true);
         radioButton3_vol->setChecked(true);
 
         gridLayout_3->addWidget(radioButton3_vol, 0, 0, 1, 1);
@@ -503,12 +519,13 @@ public:
 
         layoutWidget4 = new QWidget(tab_3);
         layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(121, 102, 161, 21));
+        layoutWidget4->setGeometry(QRect(180, 100, 123, 21));
         gridLayout_4 = new QGridLayout(layoutWidget4);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         gridLayout_4->setContentsMargins(0, 0, 0, 0);
         radioButton4_vol = new QRadioButton(layoutWidget4);
         radioButton4_vol->setObjectName(QString::fromUtf8("radioButton4_vol"));
+        radioButton4_vol->setEnabled(true);
         radioButton4_vol->setChecked(true);
 
         gridLayout_4->addWidget(radioButton4_vol, 0, 0, 1, 1);
@@ -521,42 +538,45 @@ public:
 
         layoutWidget5 = new QWidget(tab_3);
         layoutWidget5->setObjectName(QString::fromUtf8("layoutWidget5"));
-        layoutWidget5->setGeometry(QRect(120, 131, 161, 21));
-        gridLayout_5 = new QGridLayout(layoutWidget5);
-        gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
-        gridLayout_5->setContentsMargins(0, 0, 0, 0);
+        layoutWidget5->setGeometry(QRect(180, 130, 123, 21));
+        horizontalLayout = new QHBoxLayout(layoutWidget5);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        radioButton5_cur = new QRadioButton(layoutWidget5);
+        radioButton5_cur->setObjectName(QString::fromUtf8("radioButton5_cur"));
+        radioButton5_cur->setEnabled(true);
+        radioButton5_cur->setChecked(true);
+
+        horizontalLayout->addWidget(radioButton5_cur);
+
         radioButton5_vol = new QRadioButton(layoutWidget5);
         radioButton5_vol->setObjectName(QString::fromUtf8("radioButton5_vol"));
         radioButton5_vol->setEnabled(false);
         radioButton5_vol->setChecked(false);
 
-        gridLayout_5->addWidget(radioButton5_vol, 0, 0, 1, 1);
-
-        radioButton5_cur = new QRadioButton(layoutWidget5);
-        radioButton5_cur->setObjectName(QString::fromUtf8("radioButton5_cur"));
-        radioButton5_cur->setChecked(true);
-
-        gridLayout_5->addWidget(radioButton5_cur, 0, 1, 1, 1);
+        horizontalLayout->addWidget(radioButton5_vol);
 
         layoutWidget6 = new QWidget(tab_3);
         layoutWidget6->setObjectName(QString::fromUtf8("layoutWidget6"));
-        layoutWidget6->setGeometry(QRect(120, 158, 161, 21));
-        gridLayout_6 = new QGridLayout(layoutWidget6);
-        gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
-        gridLayout_6->setContentsMargins(0, 0, 0, 0);
+        layoutWidget6->setGeometry(QRect(180, 160, 123, 21));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget6);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        radioButton6_cur = new QRadioButton(layoutWidget6);
+        radioButton6_cur->setObjectName(QString::fromUtf8("radioButton6_cur"));
+        radioButton6_cur->setEnabled(true);
+        radioButton6_cur->setCheckable(true);
+        radioButton6_cur->setChecked(true);
+
+        horizontalLayout_2->addWidget(radioButton6_cur);
+
         radioButton6_vol = new QRadioButton(layoutWidget6);
         radioButton6_vol->setObjectName(QString::fromUtf8("radioButton6_vol"));
         radioButton6_vol->setEnabled(false);
         radioButton6_vol->setCheckable(true);
         radioButton6_vol->setChecked(false);
 
-        gridLayout_6->addWidget(radioButton6_vol, 0, 0, 1, 1);
-
-        radioButton6_cur = new QRadioButton(layoutWidget6);
-        radioButton6_cur->setObjectName(QString::fromUtf8("radioButton6_cur"));
-        radioButton6_cur->setChecked(true);
-
-        gridLayout_6->addWidget(radioButton6_cur, 0, 1, 1, 1);
+        horizontalLayout_2->addWidget(radioButton6_vol);
 
         tabWidget->addTab(tab_3, QString());
         tab_2 = new QWidget();
@@ -592,7 +612,10 @@ public:
         label_15 = new QLabel(groupBox);
         label_15->setObjectName(QString::fromUtf8("label_15"));
         label_15->setGeometry(QRect(280, 67, 16, 20));
-        label_15->setFont(font7);
+        QFont font9;
+        font9.setFamily(QString::fromUtf8("Times New Roman"));
+        font9.setPointSize(10);
+        label_15->setFont(font9);
         label_15->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         label_17 = new QLabel(groupBox);
         label_17->setObjectName(QString::fromUtf8("label_17"));
@@ -602,12 +625,12 @@ public:
         label_18 = new QLabel(groupBox);
         label_18->setObjectName(QString::fromUtf8("label_18"));
         label_18->setGeometry(QRect(170, 70, 16, 20));
-        QFont font9;
-        font9.setFamily(QString::fromUtf8("Times New Roman"));
-        font9.setPointSize(10);
-        font9.setBold(true);
-        font9.setWeight(75);
-        label_18->setFont(font9);
+        QFont font10;
+        font10.setFamily(QString::fromUtf8("Times New Roman"));
+        font10.setPointSize(10);
+        font10.setBold(true);
+        font10.setWeight(75);
+        label_18->setFont(font10);
         label_18->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         label_20 = new QLabel(groupBox);
         label_20->setObjectName(QString::fromUtf8("label_20"));
@@ -751,7 +774,7 @@ public:
 
         retranslateUi(canshu_widget);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(canshu_widget);
@@ -817,19 +840,23 @@ public:
         label_24->setText(QApplication::translate("canshu_widget", "\351\200\232\344\277\241\345\234\260\345\235\200:", nullptr));
         label_25->setText(QApplication::translate("canshu_widget", "\345\274\200\345\272\246\345\200\274\344\270\212\351\231\220:", nullptr));
         label_26->setText(QApplication::translate("canshu_widget", "\345\274\200\345\272\246\345\200\274\344\270\213\351\231\220:", nullptr));
-        label_30->setText(QApplication::translate("canshu_widget", "\345\274\200\345\272\246\345\200\274:", nullptr));
+        label_30->setText(QApplication::translate("canshu_widget", "\350\256\276\347\275\256\345\274\200\345\272\246\345\200\274:", nullptr));
         label_32->setText(QApplication::translate("canshu_widget", "\351\242\204\350\255\246\346\227\266\351\227\264:", nullptr));
         pushButton_kdy_start->setText(QApplication::translate("canshu_widget", "\345\220\257\345\212\250", nullptr));
         label_33->setText(QApplication::translate("canshu_widget", "s", nullptr));
         pushButton_kdy_stop->setText(QApplication::translate("canshu_widget", "\346\200\245\345\201\234", nullptr));
         pushButton_kdy_slave->setText(QApplication::translate("canshu_widget", "\344\277\235\345\255\230", nullptr));
+        label_31->setText(QApplication::translate("canshu_widget", "\345\215\225\344\275\215:", nullptr));
+        comboBox_kdUnit->setItemText(0, QApplication::translate("canshu_widget", "mm", nullptr));
+        comboBox_kdUnit->setItemText(1, QApplication::translate("canshu_widget", "cm", nullptr));
+
         tabWidget->setTabText(tabWidget->indexOf(tab_5), QApplication::translate("canshu_widget", "\345\274\200\345\272\246\346\216\247\345\210\266", nullptr));
-        label->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2231\357\274\232</span></p></body></html>", nullptr));
         label_2->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2232\357\274\232</span></p></body></html>", nullptr));
-        label_5->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2233\357\274\232</span></p></body></html>", nullptr));
-        label_6->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2234\357\274\232</span></p></body></html>", nullptr));
-        label_7->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2235\357\274\232</span></p></body></html>", nullptr));
         label_9->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2236\357\274\232</span></p></body></html>", nullptr));
+        label_6->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2234\357\274\232</span></p></body></html>", nullptr));
+        label->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2231\357\274\232</span></p></body></html>", nullptr));
+        label_5->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2233\357\274\232</span></p></body></html>", nullptr));
+        label_7->setText(QApplication::translate("canshu_widget", "<html><head/><body><p><span style=\" font-size:10pt;\">\346\250\241\345\205\245\351\200\232\351\201\2235\357\274\232</span></p></body></html>", nullptr));
         radioButton1_vol->setText(QApplication::translate("canshu_widget", "\347\224\265\345\216\213", nullptr));
         radioButton1_cur->setText(QApplication::translate("canshu_widget", "\347\224\265\346\265\201", nullptr));
         radioButton2_vol->setText(QApplication::translate("canshu_widget", "\347\224\265\345\216\213", nullptr));
@@ -838,10 +865,10 @@ public:
         radioButton3_cur->setText(QApplication::translate("canshu_widget", "\347\224\265\346\265\201", nullptr));
         radioButton4_vol->setText(QApplication::translate("canshu_widget", "\347\224\265\345\216\213", nullptr));
         radioButton4_cur->setText(QApplication::translate("canshu_widget", "\347\224\265\346\265\201", nullptr));
-        radioButton5_vol->setText(QApplication::translate("canshu_widget", "\347\224\265\345\216\213", nullptr));
         radioButton5_cur->setText(QApplication::translate("canshu_widget", "\347\224\265\346\265\201", nullptr));
-        radioButton6_vol->setText(QApplication::translate("canshu_widget", "\347\224\265\345\216\213", nullptr));
+        radioButton5_vol->setText(QApplication::translate("canshu_widget", "\347\224\265\345\216\213", nullptr));
         radioButton6_cur->setText(QApplication::translate("canshu_widget", "\347\224\265\346\265\201", nullptr));
+        radioButton6_vol->setText(QApplication::translate("canshu_widget", "\347\224\265\345\216\213", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("canshu_widget", "\346\250\241\345\205\245\351\205\215\347\275\256", nullptr));
         groupBox->setTitle(QApplication::translate("canshu_widget", "485\351\207\207\346\240\267", nullptr));
         label_13->setText(QApplication::translate("canshu_widget", "\350\256\241\347\256\227\345\200\274=", nullptr));

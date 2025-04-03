@@ -2139,7 +2139,7 @@ void tcp_socket::report_SW_test()
             send_data[index++] = ELEMENT_IDENTI_PRECIP_24H;//24h雨量标识符
             send_data[index++] = 0x21;//高5位表示数据字节数，低3位表示小数位数
             //data_result.data_rain_total = 0x12345678;
-            send_date_int = data_result.data_rain_24h * 1000;
+            send_date_int = data_result.data_rain_24h * 10;
             send_date_int = uwordToBcd(send_date_int);
             send_data[index++] = (send_date_int >> 24 )& 0xff;
             send_data[index++] = (send_date_int >> 16 )& 0xff;
@@ -2198,7 +2198,10 @@ void tcp_socket::report_SW_test()
             send_data[index++] = ELEMENT_IDENTI_KDY;//开度值标识符
             send_data[index++] = 0x20;//高5位表示数据字节数，低3位表示小数位数
             //data_result.data_flow_speed = 0x123456;
-            send_date_int = data_result.data_kdy_value;
+            if(kdy.unit == "mm")
+                send_date_int = data_result.data_kdy_value / 10;//传平台默认是cm
+            else
+                send_date_int = data_result.data_kdy_value;
             send_date_int = uwordToBcd(send_date_int);
             send_data[index++] = (send_date_int >> 24 )& 0xff;
             send_data[index++] = (send_date_int >> 16 )& 0xff;
@@ -2993,7 +2996,7 @@ void tcp_socket::report_SW_QueryRealTime_Data(TCP_COMM *Tcp_comm)
     send_data[index++] = ELEMENT_IDENTI_PRECIP_24H;//24h雨量标识符
     send_data[index++] = 0x21;//高5位表示数据字节数，低3位表示小数位数
     //data_result.data_rain_total = 0x12345678;
-    send_date_int = data_result.data_rain_24h * 1000;
+    send_date_int = data_result.data_rain_24h * 10;
     send_date_int = uwordToBcd(send_date_int);
     send_data[index++] = (send_date_int >> 24 )& 0xff;
     send_data[index++] = (send_date_int >> 16 )& 0xff;
@@ -3043,7 +3046,10 @@ void tcp_socket::report_SW_QueryRealTime_Data(TCP_COMM *Tcp_comm)
     send_data[index++] = ELEMENT_IDENTI_KDY;//开度值标识符
     send_data[index++] = 0x20;//高5位表示数据字节数，低3位表示小数位数
     //data_result.data_flow_speed = 0x123456;
-    send_date_int = data_result.data_kdy_value;
+    if(kdy.unit == "mm")
+        send_date_int = data_result.data_kdy_value / 10;//传平台默认是cm
+    else
+        send_date_int = data_result.data_kdy_value;
     send_date_int = uwordToBcd(send_date_int);
     send_data[index++] = (send_date_int >> 24 )& 0xff;
     send_data[index++] = (send_date_int >> 16 )& 0xff;
@@ -4682,6 +4688,7 @@ void tcp_socket::report_fixed_time(uint8_t socket_agreement)
         {
             report_SW_headhex->report_fixed_flag = false;
             report_SW_headhex->report_fixed_count = 0;
+            qDebug() << "tcp_SW_fixed_report";//定时报发送完成
         }
     }
 
@@ -4755,6 +4762,7 @@ void tcp_socket::report_fixed_time(uint8_t socket_agreement)
 
             report_SZY_headhex->report_fixed_flag = false;//发送定时报标志
             report_SZY_headhex->report_fixed_count = 0;
+            qDebug() << "tcp_SZY_fixed_report";//定时报发送完成
         }
     }
     else//预警机
@@ -4818,7 +4826,6 @@ void tcp_socket::report_SW_fixed_time(uint8_t fun_code)
 {
     uint16_t index = 0;
     QByteArray send_data;
-    qDebug() << "tcp_SW_fixed_time_report";
     uint32_t send_date_int = 0;
 
     for(uint8_t i=0;i<4;i++)
@@ -4987,7 +4994,7 @@ void tcp_socket::report_SW_fixed_time(uint8_t fun_code)
             send_data[index++] = ELEMENT_IDENTI_PRECIP_24H;//24h雨量标识符
             send_data[index++] = 0x21;//高5位表示数据字节数，低3位表示小数位数
             //data_result.data_rain_total = 0x12345678;
-            send_date_int = data_result.data_rain_24h * 1000;
+            send_date_int = data_result.data_rain_24h * 10;
             send_date_int = uwordToBcd(send_date_int);
             send_data[index++] = (send_date_int >> 24 )& 0xff;
             send_data[index++] = (send_date_int >> 16 )& 0xff;
@@ -5046,7 +5053,10 @@ void tcp_socket::report_SW_fixed_time(uint8_t fun_code)
             send_data[index++] = ELEMENT_IDENTI_KDY;//开度值标识符
             send_data[index++] = 0x20;//高5位表示数据字节数，低3位表示小数位数
             //data_result.data_flow_speed = 0x123456;
-            send_date_int = data_result.data_kdy_value;
+            if(kdy.unit == "mm")
+                send_date_int = data_result.data_kdy_value / 10;//传平台默认是cm
+            else
+                send_date_int = data_result.data_kdy_value;
             send_date_int = uwordToBcd(send_date_int);
             send_data[index++] = (send_date_int >> 24 )& 0xff;
             send_data[index++] = (send_date_int >> 16 )& 0xff;
@@ -7297,7 +7307,6 @@ void tcp_socket::report_SZY_fixed_time(uint8_t fun_code)
     QByteArray send_data;
     //uint32_t bcd_code = 0;
     uint32_t send_date_int = 0;
-    qDebug() << "tcp_SZY_fixed_time_report";
     for(uint8_t i=0;i<4;i++)
     {
         if(tcp_comm[i].tcp_busy)
@@ -8415,6 +8424,10 @@ void tcp_socket::delete_AllData_Total(void)
     deleteAllData("ReSendSZY2");
     deleteAllData("ReSendSZY3");
     deleteAllData("ReSendSZY4");
+#ifdef ARM
+    system("rm /home/images/images1/*");
+    system("sync");
+#endif
 }
 
 void tcp_socket::delete_ReSendData_Total()

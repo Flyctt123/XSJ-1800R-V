@@ -10438,6 +10438,7 @@ debug/canshu_widget.o: canshu_widget.cpp canshu_widget.h \
 		E:/QT5.12.9/5.12.9/mingw73_64/include/QtWidgets/QCheckBox \
 		E:/QT5.12.9/5.12.9/mingw73_64/include/QtWidgets/QComboBox \
 		E:/QT5.12.9/5.12.9/mingw73_64/include/QtWidgets/QGroupBox \
+		E:/QT5.12.9/5.12.9/mingw73_64/include/QtWidgets/QHBoxLayout \
 		E:/QT5.12.9/5.12.9/mingw73_64/include/QtWidgets/QRadioButton
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\canshu_widget.o canshu_widget.cpp
 

@@ -60,15 +60,54 @@ void data_Thread::run()
                     system("echo 0 > /sys/class/gpio/gpio208/value");
                 Watch_dog_flag = !Watch_dog_flag;
             }
+
+            if((QTime::currentTime().hour() == 0) && (QTime::currentTime().minute() == 0) && (QTime::currentTime().second() == 0))//每天0点清理图片
+                FindFileForDelete("/home/images/images1");
+#else
+            QString path = QDir::currentPath();
+            FindFileForDelete(path + "/home/images/images1");
 #endif
         }
-////        modifyData("student",2, "zhaoliu", 26);
-////        queryTable("student");
+//        modifyData("student",2, "zhaoliu", 26);
+//        queryTable("student");
         QThread::sleep(1);
     }
 }
 
-//// 查询全部数据
+bool data_Thread::FindFileForDelete(const QString &path)
+{
+    QDir dir(path);
+    if (!dir.exists())//不存在
+        return false;
+    dir.setFilter(QDir::Files);//获取所有文件
+    QFileInfoList list = dir.entryInfoList();//获取文件列表
+    auto file_count = list.count();
+    if (file_count <= 0)
+    {
+        return true;
+    }
+
+    int i=0;
+    do{
+        QFileInfo fileInfo = list.at(i);
+        //如果是文件，判断文件日期 目前默认是30天。
+        QDateTime delDateTime = QDateTime::currentDateTime().addDays(-30);
+        qint64 nSecs = delDateTime.secsTo(fileInfo.created());//Linux 30天前的时间和该文件创建时间的差值秒
+        //qint64 nSecs = delDateTime.secsTo(fileInfo.birthTime());//Windows 30天前的时间和该文件创建时间的差值秒
+        if (nSecs < 0)
+        {
+           qDebug()<<"picture DEL DateTime="<<delDateTime;
+           qDebug()<<"rm picture start";
+           //qDebug() << qPrintable(QString("%1 %2 %3").arg(fileInfo.size(), 10).arg(fileInfo.fileName(),10).arg(fileInfo.path()))<<endl;
+           //删除30天前的文件
+           fileInfo.dir().remove(fileInfo.fileName());
+        }
+        i++;
+    }while(i<list.size());
+    return true;
+}
+
+// 查询全部数据
 //void data_Thread::queryTable(QString tableName)
 //{
 //    QSqlQuery sqlQuery(thread_data_base);
@@ -89,7 +128,7 @@ void data_Thread::run()
 //    }
 //}
 
-//// 查询指定行数据
+// 查询指定行数据
 //DATA_BASE3 data_Thread::query_oneTable(QString tableName,QString data_time)
 //{
 //    DATA_BASE3 db_search;
@@ -112,7 +151,7 @@ void data_Thread::run()
 //    return db_search;
 //}
 
-//// 插入单条数据
+// 插入单条数据
 //void data_Thread::singleInsertData(QString table_name, DATA_BASE3 &singledb)
 //{
 //    QSqlQuery sqlQuery(thread_data_base);
@@ -130,7 +169,7 @@ void data_Thread::run()
 //    }
 //}
 
-//// 插入多条数据
+// 插入多条数据
 //void data_Thread::moreInsertData(QString tableName,QList<DATA_BASE3>& moredb)
 //{
 //    // 进行多个数据的插入时，可以利用绑定进行批处理
@@ -153,7 +192,7 @@ void data_Thread::run()
 //    }
 //}
 
-//// 修改数据
+// 修改数据
 //void data_Thread::modifyData(QString tableName,DATA_BASE3 db)
 //{
 //    QSqlQuery sqlQuery(thread_data_base);
@@ -171,7 +210,7 @@ void data_Thread::run()
 //    }
 //}
 
-//// 删除数据
+// 删除数据
 //void data_Thread::deleteData(QString tableName,int id)
 //{
 //    QSqlQuery sqlQuery(thread_data_base);
@@ -187,7 +226,7 @@ void data_Thread::run()
 //    }
 //}
 
-////删除数据表
+//删除数据表
 //void data_Thread::deleteTable(QString tableName)
 //{
 //    QSqlQuery sqlQuery(thread_data_base);

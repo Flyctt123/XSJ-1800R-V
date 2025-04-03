@@ -4,11 +4,13 @@
 uint8_t DO_Flag = 0;
 extern uint8_t DI_Flag;//开入检测
 extern uint16_t AI_data[6];
+float AI[6] = {0,0,0,0,0,0};
 uint8_t AI_data_correct_count[6] = {0,0,0,0,0,0};//消抖计数
 uint8_t AI_uint_select = 0;//模入电流电压选择
 extern QSerialPort *serial[7];
 extern COMM_CONFIG comm_config[5];
 extern DATA_RES data_result;
+extern KDY kdy;
 
 mian_widget::mian_widget(QWidget *parent) :
     QWidget(parent),
@@ -57,12 +59,14 @@ mian_widget::mian_widget(QWidget *parent) :
 #else
     timer1->start(200);
 #endif
+
     AI_unit[0] = MainWindow::iniFile->value("/AI/AI1").toUInt();
     AI_unit[1] = MainWindow::iniFile->value("/AI/AI2").toUInt();
     AI_unit[2] = MainWindow::iniFile->value("/AI/AI3").toUInt();
     AI_unit[3] = MainWindow::iniFile->value("/AI/AI4").toUInt();
     AI_unit[4] = MainWindow::iniFile->value("/AI/AI5").toUInt();
     AI_unit[5] = MainWindow::iniFile->value("/AI/AI6").toUInt();
+
     for(uint8_t i=0;i<6;i++)
     {
         if(AI_unit[i])
@@ -201,8 +205,6 @@ void mian_widget::serial_send()
 
 void mian_widget::refresh_timeout()
 {
-    float AI[6] = {0,0,0,0,0,0};
-
     if((DI_Flag >> 0) & 1)
         ui->label_DI1->setStyleSheet(m_green_SheetStyle);//绿色
     else
@@ -230,48 +232,51 @@ void mian_widget::refresh_timeout()
 
     for(uint8_t i=0;i<6;i++)
     {
-        if(AI_data[i] == 0)//采集值跳到0
-        {
-            AI_data_correct_count[i] ++;
-            if(AI_data_correct_count[i] >= 15)//超过3秒
-            {
-                AI_data_correct_count[i] = 0;
-                AI[i] = (float)AI_data[i];
-            }
-        }
-        else
+//        if(AI_data[i] == 0)//采集值跳到0
+//        {
+//            AI_data_correct_count[i] ++;
+//            if(AI_data_correct_count[i] >= 15)//超过5秒
+//            {
+//                AI_data_correct_count[i] = 0;
+//                AI[i] = 0;
+//            }
+//        }
+//        else
+//        {
+            AI_data_correct_count[i] = 0;
             AI[i] = (float)AI_data[i];
+//        }
     }
 
     if(AI_unit[0] == 0)
         ui->label_AI1->setText(QString("%1").arg(AI[0] / 100) + "V");//电压原始值扩大了100倍
     else
-        ui->label_AI1->setText(QString("%1").arg(AI[0]) + "mA");
+        ui->label_AI1->setText(QString("%1").arg(AI[0] / 100) + "mA");
 
     if(AI_unit[1] == 0)
         ui->label_AI2->setText(QString("%1").arg(AI[1] / 100) + "V");
     else
-        ui->label_AI2->setText(QString("%1").arg(AI[1]) + "mA");
+        ui->label_AI2->setText(QString("%1").arg(AI[1] / 100) + "mA");
 
     if(AI_unit[2] == 0)
         ui->label_AI3->setText(QString("%1").arg(AI[2] / 100) + "V");
     else
-        ui->label_AI3->setText(QString("%1").arg(AI[2]) + "mA");
+        ui->label_AI3->setText(QString("%1").arg(AI[2] / 100) + "mA");
 
     if(AI_unit[3] == 0)
         ui->label_AI4->setText(QString("%1").arg(AI[3] / 100) + "V");
     else
-        ui->label_AI4->setText(QString("%1").arg(AI[3]) + "mA");
+        ui->label_AI4->setText(QString("%1").arg(AI[3] / 100) + "mA");
 
     if(AI_unit[4] == 0)
         ui->label_AI5->setText(QString("%1").arg(AI[4] / 100) + "V");
     else
-        ui->label_AI5->setText(QString("%1").arg(AI[4]) + "mA");
+        ui->label_AI5->setText(QString("%1").arg(AI[4] / 100) + "mA");
 
     if(AI_unit[5] == 0)
         ui->label_AI6->setText(QString("%1").arg(AI[5] / 100) + "V");
     else
-        ui->label_AI6->setText(QString("%1").arg(AI[5]) + "mA");
+        ui->label_AI6->setText(QString("%1").arg(AI[5] / 100) + "mA");
 
     ui->label_power_data->setText(QString::number(data_result.power_value,'f',2) + "V");
     ui->label_current_rain_data->setText(QString::number(data_result.data_rain_inst,'f',1) + "mm");
@@ -280,10 +285,17 @@ void mian_widget::refresh_timeout()
     ui->label_leiji_flow_data->setText(QString::number(data_result.data_flow_total,'f',0) + "m3");
 #ifdef FLOOD_FLOW
     ui->label_xiehong_flow_data->setText(QString::number(data_result.data_flood_flow,'f',2) + "m3/s");
+#else
+    ui->label_xiehong_flow->hide();
+    ui->label_xiehong_flow_data->hide();
 #endif
     ui->label_shuiwei_data->setText(QString::number(data_result.data_water,'f',2) + "m");
     ui->label_liusu_data->setText(QString::number(data_result.data_flow_speed,'f',2) + "m/s");
-    ui->label_kdy_data->setText(QString::number(data_result.data_kdy_value,'f',0) + "cm");
+
+    if(kdy.unit == "mm")
+        ui->label_kdy_data->setText(QString::number(data_result.data_kdy_value,'f',0) + "mm");
+    else
+        ui->label_kdy_data->setText(QString::number(data_result.data_kdy_value,'f',0) + "cm");
 
     if((data_result.data_kdy_state >> 0) & 1)//全开
     {

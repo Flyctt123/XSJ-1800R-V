@@ -16,6 +16,7 @@ typedef struct
     uint16_t downLimit;
     uint16_t data;
     uint16_t time;
+    QString unit;
 }KDY;
 
 typedef struct

@@ -208,6 +208,32 @@ canshu_widget::canshu_widget(QWidget *parent) :
     ui->lineEdit_kdy_time->setText(MainWindow::iniFile->value("/KDY/Time").toString());
     ui->lineEdit_rain_ratio->setText(MainWindow::iniFile->value("/RAIN/Ratio1").toString());
 
+    QFile file0("/home/kd_unit.txt");
+    if(file0.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QString line;
+         while(!file0.atEnd())
+         {
+           line = file0.readLine();
+         }
+         if(line == "0")
+         {
+             ui->comboBox_kdUnit->setCurrentIndex(0);
+             kdy.unit = "mm";
+         }
+         else
+         {
+             ui->comboBox_kdUnit->setCurrentIndex(1);
+             kdy.unit = "cm";
+         }
+         file0.close();
+    }
+    else
+    {
+        ui->comboBox_kdUnit->setCurrentIndex(0);
+        kdy.unit = "mm";
+    }
+
     modbus_comm_init();//Modbus点表配置初始化
     timer =new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout_second()));//从0秒开始计时
@@ -294,6 +320,13 @@ canshu_widget::canshu_widget(QWidget *parent) :
         ui->radioButton6_cur->setChecked(true);
     else
         ui->radioButton6_vol->setChecked(true);
+
+    ui->radioButton1_cur->hide();
+    ui->radioButton2_cur->hide();
+    ui->radioButton3_cur->hide();
+    ui->radioButton4_cur->hide();
+    ui->radioButton5_vol->hide();
+    ui->radioButton6_vol->hide();
 
     calculate_485[0].multipy = MainWindow::iniFile->value("/SAMPLING_Water/Multipy").toUInt();
     calculate_485[0].divide = MainWindow::iniFile->value("/SAMPLING_Water/Divide").toUInt();
@@ -1247,6 +1280,25 @@ void canshu_widget::on_pushButton_kdy_slave_clicked()
     kdy.downLimit = MainWindow::iniFile->value("/KDY/DownLimit").toInt();
     kdy.data = MainWindow::iniFile->value("/KDY/Data").toInt();
     kdy.time = MainWindow::iniFile->value("/KDY/Time").toInt();
+
+    QFile file("/home/kd_unit.txt");
+    if(file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        if(ui->comboBox_kdUnit->currentText() == "mm")
+        {
+            file.write("0");
+            kdy.unit = "mm";
+        }
+        else
+        {
+            file.write("1");
+            kdy.unit = "cm";
+        }
+        file.flush();
+        file.close();
+    }
+    else
+        ;
 
 #ifdef ARM
     timer->start(1000);

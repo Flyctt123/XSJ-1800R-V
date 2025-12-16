@@ -16,6 +16,7 @@
 extern bool KeyBoard_Code,KeyBoard_ABC_Code,keyBoard_flag,keyBoard_ABC_flag;
 extern QSerialPort *serial[7];
 bool sys_busy = false;
+QString station_info;
 
 xitong_widget::xitong_widget(QWidget *parent) :
     QWidget(parent),
@@ -65,7 +66,8 @@ xitong_widget::xitong_widget(QWidget *parent) :
     xitong_button_init(ui->pushButton_reSendclear);
     xitong_button_init(ui->usb_Button_Config_update);
 
-    ui->lineEdit_station_info->setText(MainWindow::iniFile->value("/STATION_INFO/ID").toString());
+    station_info = MainWindow::iniFile->value("/STATION_INFO/ID").toString();
+    ui->lineEdit_station_info->setText(station_info);
 
     //xitong_button_init(ui->pushButton_ts);
 //    pProgressBar = new QProgressBar(this);
@@ -77,9 +79,6 @@ xitong_widget::xitong_widget(QWidget *parent) :
 //    pProgressBar->setStyleSheet("QProgressBar{height:22px; text-align:center; font-size:14px; color:white; border-radius:11px; background:#1D5573;}"
 
 //                                "QProgressBar::chunk{border-radius:11px;background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #99ffff,stop:1 #41d6ff);}");
-    timer =new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout_hour()));
-    timer->start(1000 * 60 * 60);
 }
 
 xitong_widget::~xitong_widget()
@@ -203,13 +202,6 @@ void xitong_widget::xitong_button_init(QPushButton *button_init)
             "padding: 2px;"
         "}"
 
-        /**鼠标停留在按钮上的样式**/
-        "QPushButton::hover{"
-            "color: #FFFFFF;"
-            "background-color: #718093;"
-            "border-color: #2f3640;"
-        "}"
-
         /**鼠标按压下去的样式**/
         "QPushButton::pressed,QPushButton::checked{"
             "color: #FFFFFF;"
@@ -218,9 +210,9 @@ void xitong_widget::xitong_button_init(QPushButton *button_init)
 
         /**按钮失能情况下样式**/
         "QPushButton::disabled{"
-            "color: #FFFFFF;"
-            "background-color: #dcdde1;"
-            "border-color: #dcdde1;"
+        "color: #2f3640;"
+        "background-color: #f5f6fa;"
+        "border-color: #2f3640;"
         "}"
     );
 }
@@ -371,15 +363,15 @@ void xitong_widget::on_usb_Button_picture_clicked()
     QString copy_path = "";
     if(ui->comboBox->currentIndex() == 0)
     {
-        copy_path = "cp -rf /home/images/images1 " + usb_path;
+        copy_path = "cp -rf /home/images/images1 " + usb_path + " &";
     }
     else if(ui->comboBox->currentIndex() == 1)
     {
-        copy_path = "cp -rf /home/images/images2 " + usb_path;
+        copy_path = "cp -rf /home/images/images2 " + usb_path + " &";
     }
     else
     {
-        copy_path = "cp -rf /home/images/images3 " + usb_path;
+        copy_path = "cp -rf /home/images/images3 " + usb_path + " &";
     }
 
     if(usb_path == "")
@@ -426,7 +418,7 @@ void xitong_widget::on_usb_Button_picture_clicked()
 void xitong_widget::on_usb_Button_data_clicked()
 {
     sys_busy = true;
-    QString copy_path = "cp /home/MyDataBase.db " + usb_path;
+    QString copy_path = "cp /home/MyDataBase.db " + usb_path + " &";
     if(usb_path == "")
     {
         QMessageBox *m_box = new QMessageBox(QMessageBox::Information,QString("提示"),QString("请先检测USB设备"));
@@ -485,12 +477,6 @@ void xitong_widget::on_pushButton_restart_clicked()
     {
         ;
     }
-}
-
-void xitong_widget::timerTimeout_hour()
-{
-    if(QTime::currentTime().hour() == 0)
-        emit check_time_signal(1);//每天0点校时
 }
 
 void xitong_widget::on_usb_Button_update_clicked()
@@ -672,7 +658,7 @@ void xitong_widget::on_pushButton_reSendclear_clicked()
 void xitong_widget::on_usb_Button_history_clicked()
 {
     sys_busy = true;
-    QString copy_path = "cp /home/log.txt " + usb_path;
+    QString copy_path = "cp /home/log.txt " + usb_path + " &";
     if(usb_path == "")
     {
         QMessageBox *m_box = new QMessageBox(QMessageBox::Information,QString("提示"),QString("请先检测USB设备"));
@@ -717,4 +703,5 @@ void xitong_widget::on_usb_Button_history_clicked()
 void xitong_widget::on_pushButton_save_info_clicked()
 {
     MainWindow::iniFile->setValue("/STATION_INFO/ID",ui->lineEdit_station_info->text());
+    station_info = ui->lineEdit_station_info->text();
 }

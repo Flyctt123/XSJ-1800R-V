@@ -13,6 +13,7 @@
 #include <QMutex>
 #include <QtMath>
 
+extern GLBSQ glbsq[3];
 extern KDY kdy;
 extern CALCULATE_485 calculate_485[4];//水位、瞬时流量、累计流量、流速
 extern QSerialPort *serial[7];
@@ -26,6 +27,7 @@ COMM_CONFIG comm_config[5];//0:握手 1：开出 2：雨量 3：电流电压选�
 Modbus modbus[5];//COM1~4 + LPC1778串口
 DATA_RES data_result;
 int rain_data_reset = 0;//LPC1778复位后的雨量计数保留
+QStringList comm_frame_data;//485通信帧
 
 serialport::serialport(QObject *parent) :
     QThread(parent)
@@ -206,12 +208,12 @@ void serialport::data_save_timeout()
         if(QTime::currentTime().hour() >= 8)
         {
             data_result.data_rain_day = query_oneTable("Rain_Total",Rain_time_day2).data - query_oneTable("Rain_Total",Rain_time_day1).data;//日降雨量
-            data_result.data_rain_inst = data_result.data_rain_total - query_oneTable("Rain_Total",Rain_time_day2).data;//当前降雨量
+            data_result.data_rain_inst = data_result.data_rain_total - query_oneTable("Rain_Total",Rain_time_day2).data;//当前雨量
         }
         else
         {
             data_result.data_rain_day = data_result.data_rain_total - query_oneTable("Rain_Total",Rain_time_day1).data;//日降雨量
-            data_result.data_rain_inst = data_result.data_rain_total - query_oneTable("Rain_Total",Rain_time_day1).data;//当前降雨量
+            data_result.data_rain_inst = data_result.data_rain_total - query_oneTable("Rain_Total",Rain_time_day1).data;//当前雨量
         }
 
         data_result.data_rain_1h = data_result.data_rain_total - query_oneTable("Rain_Total",Rain_time_1h).data;//1h降雨量
@@ -394,6 +396,13 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
             }
             else//485通信
             {
+                QString comm_data = "COM" + QString::number(comm_modbus.serial_num) + ":" + comm_modbus.recive_buf_com.toHex();
+                comm_frame_data.append(comm_data);//通信帧监控
+                // 如果数据超过 maxLines，移除前面的行
+                if (comm_frame_data.size() > 10) {
+                    comm_frame_data = comm_frame_data.mid(comm_frame_data.size() - 10); // 保留最后 10 行
+                }
+
                 if(comm_receive_flag == false)
                     comm_receive_flag = true;
                 if((unsigned char)comm_modbus.recive_buf_com.at(0) == comm_modbus.device_addr)
@@ -417,14 +426,16 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                         QString str_res2 = comm_modbus.recive_buf_com.toHex().mid(8,2);
                                         QString str_res = str_res1 + str_res2;
                                         data_res_int = str_res.toInt(&ok,16);
-                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
-                                        {
-                                            data_res_int = data_res_int & 0x7FFF;   //清除符号位
-                                            data_res_int = ~ data_res_int;           //反码
-                                            data_res_int = data_res_int & 0x7FFF;   //清除左边多余位
-                                            data_res_int = data_res_int + 1;        //加1
-                                            data_res_int = data_res_int * -1;         //符号位
-                                        }
+//                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
+//                                        {
+//                                            data_res_int = data_res_int & 0x7FFF;   //清除符号位
+//                                            data_res_int = ~ data_res_int;           //反码
+//                                            data_res_int = data_res_int & 0x7FFF;   //清除左边多余位
+//                                            data_res_int = data_res_int + 1;        //加1
+//                                            data_res_int = data_res_int * -1;         //符号位
+//                                        }
+                                        // 直接转换为有符号16位整数
+                                        data_res_int = static_cast<int16_t>(data_res_int);
                                         data_res_float = data_res_int;
                                     }
                                     if(data_len == 4)//长整型
@@ -435,14 +446,16 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                         QString str_res4 = comm_modbus.recive_buf_com.toHex().mid(12,2);//4
                                         QString str_res = str_res1 + str_res2 + str_res3 + str_res4;
                                         data_res_int = str_res.toInt(&ok,16);
-                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
-                                        {
-                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除符号位
-                                            data_res_int = ~ data_res_int;           //反码
-                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除左边多余位
-                                            data_res_int = data_res_int + 1;        //加1
-                                            data_res_int = data_res_int * -1;         //符号位
-                                        }
+//                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
+//                                        {
+//                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除符号位
+//                                            data_res_int = ~ data_res_int;           //反码
+//                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除左边多余位
+//                                            data_res_int = data_res_int + 1;        //加1
+//                                            data_res_int = data_res_int * -1;         //符号位
+//                                        }
+                                        // 直接转换为有符号16位整数
+                                        data_res_int = static_cast<int32_t>(data_res_int);
                                         data_res_float = data_res_int;
                                     }
                                 }
@@ -474,14 +487,16 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                         QString str_res2 = comm_modbus.recive_buf_com.toHex().mid(8,2);
                                         QString str_res = str_res1 + str_res2;
                                         data_res_int = str_res.toInt(&ok,16);
-                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
-                                        {
-                                            data_res_int = data_res_int & 0x7FFF;   //清除符号位
-                                            data_res_int = ~ data_res_int;           //反码
-                                            data_res_int = data_res_int & 0x7FFF;   //清除左边多余位
-                                            data_res_int = data_res_int + 1;        //加1
-                                            data_res_int = data_res_int * -1;         //符号位
-                                        }
+//                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
+//                                        {
+//                                            data_res_int = data_res_int & 0x7FFF;   //清除符号位
+//                                            data_res_int = ~ data_res_int;           //反码
+//                                            data_res_int = data_res_int & 0x7FFF;   //清除左边多余位
+//                                            data_res_int = data_res_int + 1;        //加1
+//                                            data_res_int = data_res_int * -1;         //符号位
+//                                        }
+                                        // 直接转换为有符号16位整数
+                                        data_res_int = static_cast<int16_t>(data_res_int);
                                         data_res_float = data_res_int;
                                     }
                                     if(data_len == 4)//长整型
@@ -492,14 +507,16 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                         QString str_res4 = comm_modbus.recive_buf_com.toHex().mid(12,2);//3
                                         QString str_res = str_res2 + str_res1 + str_res4 + str_res3;
                                         data_res_int = str_res.toInt(&ok,16);
-                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
-                                        {
-                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除符号位
-                                            data_res_int = ~ data_res_int;           //反码
-                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除左边多余位
-                                            data_res_int = data_res_int + 1;        //加1
-                                            data_res_int = data_res_int * -1;         //符号位
-                                        }
+//                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
+//                                        {
+//                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除符号位
+//                                            data_res_int = ~ data_res_int;           //反码
+//                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除左边多余位
+//                                            data_res_int = data_res_int + 1;        //加1
+//                                            data_res_int = data_res_int * -1;         //符号位
+//                                        }
+                                        // 直接转换为有符号16位整数
+                                        data_res_int = static_cast<int32_t>(data_res_int);
                                         data_res_float = data_res_int;
                                     }
                                 }
@@ -531,14 +548,17 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                         QString str_res2 = comm_modbus.recive_buf_com.toHex().mid(8,2);
                                         QString str_res = str_res2 + str_res1;
                                         data_res_int = str_res.toInt(&ok,16);
-                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
-                                        {
-                                            data_res_int = data_res_int & 0x7FFF;   //清除符号位
-                                            data_res_int = ~ data_res_int;           //反码
-                                            data_res_int = data_res_int & 0x7FFF;   //清除左边多余位
-                                            data_res_int = data_res_int + 1;        //加1
-                                            data_res_int = data_res_int * -1;         //符号位
-                                        }
+//                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
+//                                        {
+//                                            data_res_int = data_res_int & 0x7FFF;   //清除符号位
+//                                            data_res_int = ~ data_res_int;           //反码
+//                                            data_res_int = data_res_int & 0x7FFF;   //清除左边多余位
+//                                            data_res_int = data_res_int + 1;        //加1
+//                                            data_res_int = data_res_int * -1;         //符号位
+//                                        }
+                                        // 直接转换为有符号16位整数
+                                        data_res_int = static_cast<int16_t>(data_res_int);
+
                                         data_res_float = data_res_int;
                                     }
                                     if(data_len == 4)//长整型
@@ -549,14 +569,16 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                         QString str_res4 = comm_modbus.recive_buf_com.toHex().mid(12,2);//2
                                         QString str_res = str_res3 + str_res4 + str_res1 + str_res2;
                                         data_res_int = str_res.toInt(&ok,16);
-                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
-                                        {
-                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除符号位
-                                            data_res_int = ~ data_res_int;           //反码
-                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除左边多余位
-                                            data_res_int = data_res_int + 1;        //加1
-                                            data_res_int = data_res_int * -1;         //符号位
-                                        }
+//                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
+//                                        {
+//                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除符号位
+//                                            data_res_int = ~ data_res_int;           //反码
+//                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除左边多余位
+//                                            data_res_int = data_res_int + 1;        //加1
+//                                            data_res_int = data_res_int * -1;         //符号位
+//                                        }
+                                        // 直接转换为有符号16位整数
+                                        data_res_int = static_cast<int32_t>(data_res_int);
                                         data_res_float = data_res_int;
                                     }
                                 }
@@ -587,14 +609,16 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                         QString str_res2 = comm_modbus.recive_buf_com.toHex().mid(8,2);
                                         QString str_res = str_res2 + str_res1;
                                         data_res_int = str_res.toInt(&ok,16);
-                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
-                                        {
-                                            data_res_int = data_res_int & 0x7FFF;   //清除符号位
-                                            data_res_int = ~ data_res_int;           //反码
-                                            data_res_int = data_res_int & 0x7FFF;   //清除左边多余位
-                                            data_res_int = data_res_int + 1;        //加1
-                                            data_res_int = data_res_int * -1;         //符号位
-                                        }
+//                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
+//                                        {
+//                                            data_res_int = data_res_int & 0x7FFF;   //清除符号位
+//                                            data_res_int = ~ data_res_int;           //反码
+//                                            data_res_int = data_res_int & 0x7FFF;   //清除左边多余位
+//                                            data_res_int = data_res_int + 1;        //加1
+//                                            data_res_int = data_res_int * -1;         //符号位
+//                                        }
+                                        // 直接转换为有符号16位整数
+                                        data_res_int = static_cast<int16_t>(data_res_int);
                                         data_res_float = data_res_int;
                                     }
                                     if(data_len == 4)//长整型
@@ -605,14 +629,16 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
                                         QString str_res4 = comm_modbus.recive_buf_com.toHex().mid(12,2);//1
                                         QString str_res = str_res4 + str_res3 + str_res2 + str_res1;
                                         data_res_int = str_res.toInt(&ok,16);
-                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
-                                        {
-                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除符号位
-                                            data_res_int = ~ data_res_int;           //反码
-                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除左边多余位
-                                            data_res_int = data_res_int + 1;        //加1
-                                            data_res_int = data_res_int * -1;         //符号位
-                                        }
+//                                        if(!(str_res.at(0) >= '0' && str_res.at(0) <= '7'))//负数
+//                                        {
+//                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除符号位
+//                                            data_res_int = ~ data_res_int;           //反码
+//                                            data_res_int = data_res_int & 0x7FFFFFFF;   //清除左边多余位
+//                                            data_res_int = data_res_int + 1;        //加1
+//                                            data_res_int = data_res_int * -1;         //符号位
+//                                        }
+                                        // 直接转换为有符号16位整数
+                                        data_res_int = static_cast<int32_t>(data_res_int);
                                         data_res_float = data_res_int;
                                     }
                                 }
@@ -710,20 +736,52 @@ void serialport::serialport_recive_Fun(Modbus comm_modbus)
 
                                     data_result.data_kdy_value = data_res_float;
                                 break;
-
                                 case 0xA2://开度仪状态
                                     comm_error_count[5] = 0;
 
                                     data_result.data_kdy_state = data_res_float;
                                 break;
+                                case 0xF1://功率转流量1  //当作普通瞬时流量处理
+                                    comm_error_count[7] = 0;
 
+                                    data_result.data_pwoer2flow1 = data_res_float /1000 / (9.81 * glbsq[0].sljst * glbsq[0].sljxl * glbsq[0].fdjxl / 1000000);//功率转流量 w转kw/1000，cm转m、效率%转小数/1000000
+                                break;
+                                case 0xF2://功率转流量2  //当作普通瞬时流量处理
+                                    comm_error_count[8] = 0;
+
+                                    data_result.data_pwoer2flow2 = data_res_float /1000 / (9.81 * glbsq[1].sljst * glbsq[1].sljxl * glbsq[1].fdjxl / 1000000);//功率转流量
+                                break;
+                                case 0xF3://功率转流量3  //当作普通瞬时流量处理
+                                    comm_error_count[9] = 0;
+
+                                    data_result.data_pwoer2flow3 = data_res_float /1000 / (9.81 * glbsq[2].sljst * glbsq[2].sljxl * glbsq[2].fdjxl / 1000000);//功率转流量
+                                break;
                                 default:
                                 break;
                             }
+
+#ifdef POWER2FLOW
+                            //用功率转流量作为普通瞬时流量
+                            data_result.data_flow_inst = (data_result.data_pwoer2flow1 + data_result.data_pwoer2flow2 + data_result.data_pwoer2flow3) * calculate_485[1].multipy / calculate_485[1].divide + calculate_485[1].add - calculate_485[1].subtract;
+                            if(data_result.data_flow_inst > data_result.data_flow_upper_limit_value)
+                            {
+                                data_result.alarm_state_SW = data_result.alarm_state_SW | (1 << 3);//流量超限告警
+                                data_result.alarm_state_SZY = data_result.alarm_state_SZY | (1 << 3);//流量超限告警
+                                emit tcp_alarm_signal(2);
+                            }
+                            else
+                            {
+                                data_result.alarm_state_SW = data_result.alarm_state_SW & (~(1 << 3));//水位超限告警取消
+                                data_result.alarm_state_SZY = data_result.alarm_state_SZY & (~(1 << 3));//水位超限告警取消
+                            }
+#endif
+
+#ifdef ARM
                             if(((data_result.alarm_state_SW >> 2) & 1) || ((data_result.alarm_state_SW >> 3) & 1))
                                 system("echo 1 > /sys/class/leds/user-led-alarm/brightness");
                             else
                                 system("echo 0 > /sys/class/leds/user-led-alarm/brightness");
+#endif
                             comm_modbus.send_flag[i] = false;//发送状态清除
                         }
                     }
@@ -1252,6 +1310,39 @@ void serialport::serial_send_Modbus(uint8_t number,Modbus COM_Modbus)
             }
             break;
         }
+        case 0xF1://功率转流量1
+        {
+            comm_error_count[7] ++;
+            if(comm_error_count[7] > 3)
+            {
+                comm_error_count[7] = 0;
+                data_result.data_flow_inst = 0;
+                data_result.data_pwoer2flow1 = 0;
+            }
+            break;
+        }
+        case 0xF2://功率转流量2
+        {
+            comm_error_count[8] ++;
+            if(comm_error_count[8] > 3)
+            {
+                comm_error_count[8] = 0;
+                data_result.data_flow_inst = data_result.data_pwoer2flow1;
+                data_result.data_pwoer2flow2 = 0;
+            }
+            break;
+        }
+        case 0xF3://功率转流量3
+        {
+            comm_error_count[9] ++;
+            if(comm_error_count[9] > 3)
+            {
+                comm_error_count[9] = 0;
+                data_result.data_flow_inst = data_result.data_pwoer2flow1 + data_result.data_pwoer2flow2;
+                data_result.data_pwoer2flow3 = 0;
+            }
+            break;
+        }
         default:
             break;
     }
@@ -1335,17 +1426,23 @@ DATA_BASE1 serialport::query_oneTable(QString tableName,QString data_time)
     if(!sqlQuery.exec())
     {
         qDebug() << "Error: Fail to query table. " << sqlQuery.lastError();
-        if(tableName == "Rain_Total")
-            db_search.data = data_result.data_rain_total;
+
     }
     else
     {
-        while(sqlQuery.next())
+        if (!sqlQuery.next()) {  //查询成功，但没有匹配的数据
+            if(tableName == "Rain_Total")
+                db_search.data = data_result.data_rain_total;
+        }
+        else
         {
-            db_search.id = sqlQuery.value(0).toInt();
-            db_search.mark = sqlQuery.value(1).toString();
-            db_search.data = sqlQuery.value(2).toDouble();
-            //qDebug()<<db_search.id<<db_search.mark<<db_search.data;
+            // 有数据，开始处理...
+            do {
+                db_search.id = sqlQuery.value(0).toInt();
+                db_search.mark = sqlQuery.value(1).toString();
+                db_search.data = sqlQuery.value(2).toDouble();
+                //qDebug()<<db_search.id<<db_search.mark<<db_search.data;
+            } while (sqlQuery.next());
         }
     }
     return db_search;

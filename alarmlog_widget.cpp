@@ -3,6 +3,7 @@
 
 extern bool KeyBoard_Code,keyBoard_flag;
 extern DATA_RES data_result;
+extern QStringList comm_frame_data;//485通信帧
 
 alarmLog_widget::alarmLog_widget(QWidget *parent) :
     QWidget(parent),
@@ -67,6 +68,8 @@ alarmLog_widget::alarmLog_widget(QWidget *parent) :
     alarmlog_button_init(ui->pushButton_log);
     alarmlog_button_init(ui->pushButton_log_clear);
     alarmlog_button_init(ui->pushButton);
+    alarmlog_button_init(ui->pushButton_comm_show);
+    alarmlog_button_init(ui->pushButton_comm_clear);
 
     alarm_data_base=QSqlDatabase::addDatabase("QSQLITE");//widget调用数据库不能添加connetc号，会找不到数据
     alarm_data_base.setDatabaseName(MainWindow::dbFile);
@@ -130,13 +133,6 @@ void alarmLog_widget::alarmlog_button_init(QPushButton *button_init)
             "padding: 2px;"
         "}"
 
-        /**鼠标停留在按钮上的样式**/
-        "QPushButton::hover{"
-            "color: #FFFFFF;"
-            "background-color: #718093;"
-            "border-color: #2f3640;"
-        "}"
-
         /**鼠标按压下去的样式**/
         "QPushButton::pressed,QPushButton::checked{"
             "color: #FFFFFF;"
@@ -145,9 +141,9 @@ void alarmLog_widget::alarmlog_button_init(QPushButton *button_init)
 
         /**按钮失能情况下样式**/
         "QPushButton::disabled{"
-            "color: #FFFFFF;"
-            "background-color: #dcdde1;"
-            "border-color: #dcdde1;"
+        "color: #2f3640;"
+        "background-color: #f5f6fa;"
+        "border-color: #2f3640;"
         "}"
     );
 }
@@ -327,4 +323,20 @@ void alarmLog_widget::on_comboBox_currentIndexChanged(const QString &arg1)
         ui->lineEdit_upLimit->setText(MainWindow::iniFile->value("/ALARM/Speed_upLimit").toString());
         ui->lineEdit_downLimit->setText(MainWindow::iniFile->value("/ALARM/Speed_downLimit").toString());
     }
+}
+
+void alarmLog_widget::on_pushButton_comm_show_clicked()
+{
+    ui->plainTextEdit_comm_show->clear();
+    // 遍历 QStringList，逐行追加
+    for (const QString &line : comm_frame_data)
+    {
+        ui->plainTextEdit_comm_show->appendPlainText(line);
+    }
+}
+
+void alarmLog_widget::on_pushButton_comm_clear_clicked()
+{
+    ui->plainTextEdit_comm_show->clear();
+    comm_frame_data.clear();
 }

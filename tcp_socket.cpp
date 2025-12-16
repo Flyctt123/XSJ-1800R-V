@@ -16,6 +16,7 @@ extern QString SIM_CCID;
 extern float Rain_ratio;
 uint16_t file_comm_count = 0;//文件传输计时，长时间未完成就退出
 DATA_RESEND data_reSend;
+extern QString station_info;
 
 tcp_socket::tcp_socket(QWidget *parent) :
     QWidget(parent)
@@ -81,11 +82,11 @@ tcp_socket::tcp_socket(QWidget *parent) :
     QObject::connect(tcp_comm[4].TCP_Socket, &QTcpSocket::disconnected, this, &tcp_socket::socket5_Disconnected);
 
     QFile file("/home/Config.ini");
-    maintenance = {0x5AA5,0xFF,0xA001,&file,"",0x00,0x00,0x00,{false,false,false,false,false,false}};
+    maintenance = {0x5AA5,0xFF,"",&file,"",0x00,0x00,0x00,{false,false,false,false,false,false}};
 
     timer =new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout_second()));//从0秒开始计时
-    timer->start(1000);
+    timer->start(500);
 
     timer1 =new QTimer(this);
     connect(timer1, SIGNAL(timeout()), this, SLOT(timerTimeout_receive()));
@@ -283,7 +284,7 @@ void tcp_socket::socket5_Connected()
     qDebug() << "socket5 connected!";
 
     QFile file("/home/Config.ini");
-    maintenance = {0x5AA5,0xFF,0xA001,&file,"",0x00,0x00,0x00,{false,false,false,false,false,false}};
+    maintenance = {0x5AA5,0xFF,"",&file,"",0x00,0x00,0x00,{false,false,false,false,false,false}};
     QThread::msleep(500);
     maintenance_link();
 }
@@ -368,6 +369,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                     case FC_REPORT_ON_TIME://定时报响应
                     {
                         qDebug()<<"TCP_RECEIVE_SW_Fixed_Time = " << Tcp_comm->recive_buf_comm.toHex();
+                        check_time(Tcp_comm);
 #ifdef RESEND
                         Tcp_comm->noReply_count --;
                         if(reSendQueryPoint(Tcp_comm->numTcp,QDateTime::currentDateTime().toString("yyyyMMddHHmm")))
@@ -719,6 +721,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                     default:
                         break;
                 }
+                Tcp_comm->recive_buf_comm.clear();
             }
         }
         else if((unsigned char)Tcp_comm->recive_buf_comm.at(0) == 0x68 && (unsigned char)Tcp_comm->recive_buf_comm.at(2) == 0x68)//水资源协议
@@ -978,6 +981,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                         break;
                     }
                 }
+                Tcp_comm->recive_buf_comm.clear();
             }
         }
         else if((unsigned char)Tcp_comm->recive_buf_comm.at(0) == 0x5A && (unsigned char)Tcp_comm->recive_buf_comm.at(1) == 0xA5)//维护平台新世杰协议
@@ -1019,7 +1023,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                                 if((maintenance.file_size - load_size) < send_size)
                                     file_date = file.read(maintenance.file_size - load_size);
                                 else
-                                    file_date = file.read(send_size);
+                                    file_date = file.read(send_size);//每次会自动后移send_size个字节读取
                                 uint32_t write_size = Tcp_comm->TCP_Socket->write(file_date);
                                 QThread::msleep(100);
                                 if(!Tcp_comm->TCP_Socket->waitForBytesWritten(2000))
@@ -1052,7 +1056,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
 #endif
                             QFile FileData(maintenance.file_path);
                             maintenance.file_size = FileData.size();
-                            maintenance = {0x5AA5,0x01,0xA001,&FileData,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                            maintenance = {0x5AA5,0x01,"",&FileData,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                            maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                             maintenance_link();
                         }
@@ -1070,7 +1074,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                         maintenance.file_size = file_len_str.toULongLong(&ok,16);//16进制字符串转10进制
                         qDebug()<<"TCP_config.ini_recive_start";
                         QFile file("/home/Config.ini");
-                        maintenance = {0x5AA5,0x02,0xA001,&file,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                        maintenance = {0x5AA5,0x02,"",&file,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                        maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                         maintenance_link();
                         updata_label->setText("配置文件更新中...");
@@ -1096,7 +1100,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                         pProgressBar->setRange(0,maintenance.file_size);
                         qDebug()<<"TCP_updata_recive_start";
                         QFile file("/home/main_menu");
-                        maintenance = {0x5AA5,0x03,0xA001,&file,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                        maintenance = {0x5AA5,0x03,"",&file,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                        maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                         maintenance_link();
                         updata_label->setText("版本更新中...");
@@ -1105,6 +1109,8 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                         pProgressBar->raise();
                         pProgressBar->show();
                         file_comm_count = 0;
+                        recive_file_size = 0;
+                        fileComm_UIcount = 0;
                         QCoreApplication::processEvents();//强制刷新UI界面
 #ifdef ARM
                         system("rm /home/main_menu_backups");
@@ -1123,7 +1129,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                         maintenance.file_size = file_len_str.toULongLong(&ok,16);//16进制字符串转10进制
                         qDebug()<<"TCP_EXCEL_recive_start";
                         QFile file("/home/formula.xlsx");
-                        maintenance = {0x5AA5,0x04,0xA001,&file,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                        maintenance = {0x5AA5,0x04,"",&file,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                        maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                         maintenance_link();
                         updata_label->setText("EXCEL文件更新中...");
@@ -1168,7 +1174,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                             maintenance.file_path = MainWindow::dbFile;
                             QFile FileData(maintenance.file_path);
                             maintenance.file_size = FileData.size();
-                            maintenance = {0x5AA5,0x05,0xA001,&FileData,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                            maintenance = {0x5AA5,0x05,"",&FileData,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                            maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                             maintenance_link();
                         }
@@ -1204,7 +1210,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                             maintenance.file_path = MainWindow::logFile;
                             QFile FileData(maintenance.file_path);
                             maintenance.file_size = FileData.size();
-                            maintenance = {0x5AA5,0x06,0xA001,&FileData,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                            maintenance = {0x5AA5,0x06,"",&FileData,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                            maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                             maintenance_link();
                         }
@@ -1240,7 +1246,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                 qDebug()<<"TCP_updata_recive_ok";
                 file.close();
                 QThread::msleep(200);
-                maintenance = {0x5AA5,0x03,0xA001,maintenance.file_info,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                maintenance = {0x5AA5,0x03,"",maintenance.file_info,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                 maintenance_link();
                 QThread::msleep(200);
@@ -1274,7 +1280,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                 qDebug()<<"TCP_config_recive_ok";
                 file.close();
                 QThread::msleep(200);
-                maintenance = {0x5AA5,0x02,0xA001,maintenance.file_info,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                maintenance = {0x5AA5,0x02,"",maintenance.file_info,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                 maintenance_link();
                 QThread::msleep(200);
@@ -1308,7 +1314,7 @@ void tcp_socket::socket_comm_fun(TCP_COMM *Tcp_comm)
                 qDebug()<<"TCP_updata_recive_ok";
                 file.close();
                 QThread::msleep(200);
-                maintenance = {0x5AA5,0x04,0xA001,maintenance.file_info,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
+                maintenance = {0x5AA5,0x04,"",maintenance.file_info,maintenance.file_path,maintenance.file_size,maintenance.send_size,maintenance.load_size,{maintenance.fun_flag[0],maintenance.fun_flag[1],
                                maintenance.fun_flag[2],maintenance.fun_flag[3],maintenance.fun_flag[4],maintenance.fun_flag[5]}};
                 maintenance_link();
                 QThread::msleep(200);
@@ -1389,7 +1395,7 @@ void tcp_socket::socket5_Disconnected()
 
 void tcp_socket::timerTimeout_second()
 {
-    if(QTime::currentTime().second() == 0)
+    if(QTime::currentTime().second() == 1)
     {
         timer->stop();
         timer2->start(60000);
@@ -1594,12 +1600,15 @@ void tcp_socket::Timeout_second_picture()
     }
 }
 
+//仅用于读历史数据和日志的超时判断，远程升级在平台5分钟无数据交互处判断
 void tcp_socket::Timeout_send_maintenance_file()
 {
     file_comm_count ++;
     if(file_comm_count > (20 * 60 * 5))//5分钟
     {
         updata_label->hide();
+        if(pProgressBar)
+            pProgressBar->close();
         QCoreApplication::processEvents();//强制刷新UI界面
         maintenance.file_info->close();
         maintenance.load_size = 0;
@@ -1623,6 +1632,8 @@ void tcp_socket::Timeout_send_maintenance_file()
         {
             qDebug()<<"net_wait_error";
             updata_label->hide();
+            if(pProgressBar)
+                pProgressBar->close();
             QCoreApplication::processEvents();//强制刷新UI界面
             maintenance.file_info->close();
             maintenance.load_size = 0;
@@ -1639,6 +1650,8 @@ void tcp_socket::Timeout_send_maintenance_file()
     else
     {
         updata_label->hide();
+        if(pProgressBar)
+            pProgressBar->close();
         QCoreApplication::processEvents();//强制刷新UI界面
         maintenance.file_info->close();
         maintenance.load_size = 0;
@@ -1652,6 +1665,10 @@ void tcp_socket::Timeout_send_maintenance_file()
 
 void tcp_socket::timerTimeout_minute()
 {   
+    // 如果是1月1日，则执行删除操作
+    if (QDateTime::currentDateTime().date().month() == 1 && QDateTime::currentDateTime().date().day() == 1 && QDateTime::currentDateTime().time().minute() == 1)
+        cleanupOldData();
+
     for(uint8_t i=0;i<5;i++)
     {
         if(tcp_comm[i].socket_select == false)
@@ -1681,10 +1698,12 @@ void tcp_socket::timerTimeout_minute()
             if(i == 4)//维护平台
             {
                 updata_label->hide();
+                if(pProgressBar)
+                    pProgressBar->close();
                 QCoreApplication::processEvents();//强制刷新UI界面
                 tcp_comm[4].tcp_busy = false;
                 QFile file("/home/Config.ini");
-                maintenance = {0x5AA5,0xFF,0xA001,&file,"",0x00,0x00,0x00,{false,false,false,false,false,false}};
+                maintenance = {0x5AA5,0xFF,"",&file,"",0x00,0x00,0x00,{false,false,false,false,false,false}};
                 tcp_comm[4].recive_buf_comm.clear();
                 recive_file_size = 0;
             }
@@ -1752,8 +1771,21 @@ void tcp_socket::maintenance_link()
     send_data[index++] = maintenance.frame_Begin >> 8;
     send_data[index++] = maintenance.frame_Begin & 0xff;
     send_data[index++] = maintenance.fun_code;
-    send_data[index++] = maintenance.device_num >> 8;
-    send_data[index++] = maintenance.device_num & 0xff;
+
+    if(maintenance.fun_code == 0xff)
+    {
+        // 握手需要发设备名称
+        QByteArray strBytes = station_info.toUtf8();
+        send_data.append(strBytes); // 直接追加
+        index += strBytes.size();  // 增加index
+    }
+    else
+    {
+        //适配旧工具 非握手操作不需要设备信息
+        send_data[index++] = 0xA0;
+        send_data[index++] = 0x01;
+    }
+
     send_data[index++] = (maintenance.file_size >> 24) & 0xff;
     send_data[index++] = (maintenance.file_size >> 16) & 0xff;
     send_data[index++] = (maintenance.file_size >> 8) & 0xff;
@@ -4143,9 +4175,18 @@ void tcp_socket::report_SW_Query_Basic_Set(TCP_COMM *Tcp_comm)
                 send_data[index++] = byteToBcd((char_ip1[2] / 10) & 0xff);
                 send_data[index++] = byteToBcd((char_ip1[2] % 10 * 10 + char_ip1[3] / 100) & 0xff);
                 send_data[index++] = byteToBcd((char_ip1[3] % 100) & 0xff);
-                send_data[index++] = (wordTo3Bcd(tcp_comm[0].port) >> 16) & 0xff;
-                send_data[index++] = (wordTo3Bcd(tcp_comm[0].port) >> 8) & 0xff;
-                send_data[index++] = wordTo3Bcd(tcp_comm[0].port) & 0xff;
+                if(tcp_comm[0].port == 0)
+                {
+                    send_data[index++] = 0 & 0xff;
+                    send_data[index++] = 0 & 0xff;
+                    send_data[index++] = 0 & 0xff;
+                }
+                else
+                {
+                    send_data[index++] = (wordTo3Bcd(tcp_comm[0].port) >> 16) & 0xff;
+                    send_data[index++] = (wordTo3Bcd(tcp_comm[0].port) >> 8) & 0xff;
+                    send_data[index++] = wordTo3Bcd(tcp_comm[0].port) & 0xff;
+                }
                 break;
             }
             case 0x05://中心站 1 备用信道类型及地址
@@ -4161,9 +4202,19 @@ void tcp_socket::report_SW_Query_Basic_Set(TCP_COMM *Tcp_comm)
                 send_data[index++] = byteToBcd((char_ip2[2] / 10) & 0xff);
                 send_data[index++] = byteToBcd((char_ip2[2] % 10 * 10 + char_ip2[3] / 100) & 0xff);
                 send_data[index++] = byteToBcd((char_ip2[3] % 100) & 0xff);
-                send_data[index++] = (wordTo3Bcd(tcp_comm[1].port) >> 16) & 0xff;
-                send_data[index++] = (wordTo3Bcd(tcp_comm[1].port) >> 8) & 0xff;
-                send_data[index++] = wordTo3Bcd(tcp_comm[1].port) & 0xff;
+                if(tcp_comm[1].port == 0)
+                {
+                    send_data[index++] = 0 & 0xff;
+                    send_data[index++] = 0 & 0xff;
+                    send_data[index++] = 0 & 0xff;
+                }
+                else
+                {
+                    send_data[index++] = (wordTo3Bcd(tcp_comm[1].port) >> 16) & 0xff;
+                    send_data[index++] = (wordTo3Bcd(tcp_comm[1].port) >> 8) & 0xff;
+                    send_data[index++] = wordTo3Bcd(tcp_comm[1].port) & 0xff;
+                }
+
                 break;
             }
             case 0x06://中心站 2 主信道类型及地址
@@ -7955,6 +8006,32 @@ void tcp_socket::queryTable(QString tableName)
             QString mark = sqlQuery.value(1).toString();
             int data = sqlQuery.value(2).toInt();
             qDebug()<<QString("Bid:%1    mark:%2    data:%3").arg(id).arg(mark).arg(data);
+        }
+    }
+}
+
+void tcp_socket::cleanupOldData()
+{
+    // 获取当前日期
+    QDateTime currentDate = QDateTime::currentDateTime();
+
+    // 计算一年前的日期（格式化为yyyyMMddHHmm）
+    QDateTime oneYearAgo = currentDate.addYears(-1);
+    QString oneYearAgoStr = oneYearAgo.toString("yyyyMMddHHmm");
+
+    // 要操作的表列表
+    QStringList tables = {"Flow", "Water", "Rain", "Alarm", "Speed", "Rain_Total"};
+
+    QSqlQuery query(tcp_data_base);
+    for (const QString &table : tables) {
+        QString deleteSql = QString("DELETE FROM %1 WHERE mark < ?").arg(table);
+        query.prepare(deleteSql);
+        query.addBindValue(oneYearAgoStr);
+
+        if (!query.exec()) {
+            qDebug() << "Failed to delete old data from table" << table << ":" << query.lastError().text();
+        } else {
+            qDebug() << "Deleted old data from table" << table << "from before" << oneYearAgoStr;
         }
     }
 }

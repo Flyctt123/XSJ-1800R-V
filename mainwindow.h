@@ -31,6 +31,8 @@
 #define ARM 1 //ARM环境
 #define RESEND 1 //补传功能
 //#define FLOOD_FLOW 1 //泄洪流量计算
+//#define POWER2FLOW 1 //功率转流量计算 //通用版无此功能
+
 #define PI acos(-1)
 
 class MainWindow : public QMainWindow

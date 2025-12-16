@@ -25,7 +25,6 @@ private:
     Ui::xitong_widget *ui;
     QString usb_path = "";
     //QProgressBar *pProgressBar;
-    QTimer *timer;
 private slots:
     bool eventFilter(QObject *, QEvent *);
     void callKeyBoard(QLineEdit *a);
@@ -38,7 +37,6 @@ private slots:
     void on_usb_Button_data_clicked();
     void on_usb_Button_picture_clicked();
     void on_pushButton_restart_clicked();
-    void timerTimeout_hour();
     void on_usb_Button_update_clicked();
     void on_pushButton_save_time_clicked();
 
@@ -57,7 +55,6 @@ private slots:
     void on_pushButton_save_info_clicked();
 
 signals:
-    void check_time_signal(int);
     void sysClear(int);
     void reSendClear(int);
 };

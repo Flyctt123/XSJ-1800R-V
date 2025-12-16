@@ -139,7 +139,7 @@ typedef struct
 {
     uint16_t frame_Begin; //帧起始符
     uint8_t fun_code;     //功能码
-    uint16_t device_num;  //设备编号
+    QString device_num;  //设备编号,站点名称
     QFile *file_info;   //文件信息
     QString file_path;   //文件路径
     uint32_t file_size;  //文件大小
@@ -260,7 +260,6 @@ signals:
     void kdy_signal(int);
     void uploadBaseSet(int);
     void uploadRunSet(int);
-
 public slots:
 
     void Wifi_Connected();
@@ -289,6 +288,8 @@ public slots:
     QString floatToBCD(float number);//float转为BCD码
     // 查询全部数据
     void queryTable(QString tableName);
+    //定期删除数据
+    void cleanupOldData(void);
     // 查询指定数据
     DATA_BASE2 query_oneTable(QString tableName,QString data_time);
     // 插入数据

@@ -136,6 +136,10 @@ typedef struct
     uint16_t data_kdy_state;//开度仪状态//bit0:全开、bit1:全关、bit2:上升、bit3:下降、bit8:自动、bit11:故障
 
     double data_flood_flow;//泄洪流量数据
+
+    double data_pwoer2flow1;//功率转流量1数据
+    double data_pwoer2flow2;//功率转流量2数据
+    double data_pwoer2flow3;//功率转流量3数据
 }DATA_RES;
 
 class serialport : public QThread
@@ -197,7 +201,7 @@ private:
     QString time_now_date = "";//日期时间
     uint8_t modbus_count[4] = {0,0,0,0};
     QString Rain_time_day1,Rain_time_day2,Rain_time_1h,Rain_time_3h,Rain_time_6h,Rain_time_12h,Rain_time_24h,Rain_time_48h,Rain_time_72h;//降雨量计算时间
-    uint8_t comm_error_count[7];//通信异常计数，由于处理通信异常清零[水位、瞬时流量、累计流量、流速、开度值、开度仪状态、泄洪流量]
+    uint8_t comm_error_count[10];//通信异常计数，由于处理通信异常清零[水位、瞬时流量、累计流量、流速、开度值、开度仪状态、泄洪流量、功率变送器1、功率变送器2、功率变送器3]
 signals:
     void tcp_alarm_signal(int);//超阈值告警信号
 };

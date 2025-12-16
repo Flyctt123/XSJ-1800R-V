@@ -2,7 +2,7 @@
 #include "ui_canshu_widget.h"
 #include "serialport.h"
 
-extern bool KeyBoard_Code,keyBoard_flag;
+extern bool KeyBoard_Code,KeyBoard_ABC_Code,keyBoard_flag,keyBoard_ABC_flag;
 QSerialPort *serial[7];
 float Rain_ratio = 0;//雨量分辨力
 extern REPORT_HEADHEX_SW *report_SW_headhex;
@@ -12,6 +12,7 @@ extern DATA_RES data_result;
 extern Modbus modbus[5];//COM1~3 + 开度仪 + LPC1778串口
 CALCULATE_485 calculate_485[4];//水位、瞬时流量、累计流量、流速
 KDY kdy;
+GLBSQ glbsq[3];
 
 /*
 "serial[0] --- ttyAS1" --- 路由模块调试口
@@ -22,6 +23,32 @@ KDY kdy;
 "serial[5] --- ttyCH343USB2" --- LORA
 "serial[6] --- ttyCH343USB3" --- 第2路485
 */
+
+//读新增配置文件
+QMap<QString, QString> readConfigLineByLine(const QString &filePath) {
+    QMap<QString, QString> config;
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "无法打开配置文件：" << filePath;
+        return config;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();  // 读取一行并去除两端空格
+        if (line.isEmpty()) continue;  // 跳过空行
+
+        QStringList keyValue = line.split("=");
+        if (keyValue.size() == 2)//确保是A=B格式
+        {
+            config[keyValue[0].trimmed()] = keyValue[1].trimmed();
+        }
+    }
+
+    file.close();
+    return config;
+}
 
 canshu_widget::canshu_widget(QWidget *parent) :
     QWidget(parent),
@@ -70,6 +97,9 @@ canshu_widget::canshu_widget(QWidget *parent) :
     ui->lineEdit_report_type->installEventFilter(this);
     ui->lineEdit_add_reportTime->installEventFilter(this);
     ui->lineEdit_fixed_reportTime->installEventFilter(this);
+    ui->lineEdit_power2flow_sljst->installEventFilter(this);
+    ui->lineEdit_power2flow_sljxl->installEventFilter(this);
+    ui->lineEdit_power2flow_fdjxl->installEventFilter(this);
 
     //查找可用的串口
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) //扫描可用串口
@@ -99,7 +129,7 @@ canshu_widget::canshu_widget(QWidget *parent) :
     }
 #else
     serial[1] = new QSerialPort;
-    serial_init(serial[1],"COM3",9600);//开机初始化串口
+    serial_init(serial[1],"COM4",9600);//开机初始化串口
 #endif
 
     portCOM += "COM1";
@@ -111,7 +141,6 @@ canshu_widget::canshu_widget(QWidget *parent) :
 
     qDebug()<<"serial_port =" << portStringList;
 
-    canshu_button_init(ui->clear_Button_485);
     canshu_button_init(ui->save_Button_485);
     canshu_button_init(ui->save_Button_sampling);
     canshu_button_init(ui->pushButton_kdy_stop);
@@ -119,6 +148,7 @@ canshu_widget::canshu_widget(QWidget *parent) :
     canshu_button_init(ui->pushButton_kdy_slave);
     canshu_button_init(ui->pushButton_SW_test);
     canshu_button_init(ui->save_Button_tcpTime);
+    canshu_button_init(ui->pushButton_power2flow_save);
 
     serial_change = new QSerialPort;
 
@@ -285,6 +315,23 @@ canshu_widget::canshu_widget(QWidget *parent) :
     else
         report_SW_headhex->report_type_select[1] = false;
 
+    //读功率变送器配置
+    QMap<QString, QString> glbsq_config1 = readConfigLineByLine("/home/power2flow1.txt");
+    glbsq[0].sljst = glbsq_config1["sljst1"].toInt();
+    glbsq[0].sljxl = glbsq_config1["sljxl1"].toInt();
+    glbsq[0].fdjxl = glbsq_config1["fdjxl1"].toInt();
+    QMap<QString, QString> glbsq_config2 = readConfigLineByLine("/home/power2flow2.txt");
+    glbsq[1].sljst = glbsq_config2["sljst2"].toInt();
+    glbsq[1].sljxl = glbsq_config2["sljxl2"].toInt();
+    glbsq[1].fdjxl = glbsq_config2["fdjxl2"].toInt();
+    QMap<QString, QString> glbsq_config3 = readConfigLineByLine("/home/power2flow3.txt");
+    glbsq[2].sljst = glbsq_config3["sljst3"].toInt();
+    glbsq[2].sljxl = glbsq_config3["sljxl3"].toInt();
+    glbsq[2].fdjxl = glbsq_config3["fdjxl3"].toInt();
+    ui->lineEdit_power2flow_sljst->setText(glbsq_config1["sljst1"]);
+    ui->lineEdit_power2flow_sljxl->setText(glbsq_config1["sljxl1"]);
+    ui->lineEdit_power2flow_fdjxl->setText(glbsq_config1["fdjxl1"]);
+
     ui->lineEdit_central_addr->setText(MainWindow::iniFile->value("/SW_PROTOCOL/Central_addr").toString());
     ui->lineEdit_station_addr->setText(MainWindow::iniFile->value("/SW_PROTOCOL/Station_addr").toString());
     ui->lineEdit_report_password->setText(MainWindow::iniFile->value("/SW_PROTOCOL/Password").toString());
@@ -328,22 +375,27 @@ canshu_widget::canshu_widget(QWidget *parent) :
     ui->radioButton5_vol->hide();
     ui->radioButton6_vol->hide();
 
-    calculate_485[0].multipy = MainWindow::iniFile->value("/SAMPLING_Water/Multipy").toUInt();
-    calculate_485[0].divide = MainWindow::iniFile->value("/SAMPLING_Water/Divide").toUInt();
-    calculate_485[0].add = MainWindow::iniFile->value("/SAMPLING_Water/Add").toUInt();
-    calculate_485[0].subtract = MainWindow::iniFile->value("/SAMPLING_Water/Subtract").toUInt();
-    calculate_485[1].multipy = MainWindow::iniFile->value("/SAMPLING_flow_inst/Multipy").toUInt();
-    calculate_485[1].divide = MainWindow::iniFile->value("/SAMPLING_flow_inst/Divide").toUInt();
-    calculate_485[1].add = MainWindow::iniFile->value("/SAMPLING_flow_inst/Add").toUInt();
-    calculate_485[1].subtract = MainWindow::iniFile->value("/SAMPLING_flow_inst/Subtract").toUInt();
-    calculate_485[2].multipy = MainWindow::iniFile->value("/SAMPLING_flow_total/Multipy").toUInt();
-    calculate_485[2].divide = MainWindow::iniFile->value("/SAMPLING_flow_total/Divide").toUInt();
-    calculate_485[2].add = MainWindow::iniFile->value("/SAMPLING_flow_total/Add").toUInt();
-    calculate_485[2].subtract = MainWindow::iniFile->value("/SAMPLING_flow_total/Subtract").toUInt();
-    calculate_485[3].multipy = MainWindow::iniFile->value("/SAMPLING_flow_speed/Multipy").toUInt();
-    calculate_485[3].divide = MainWindow::iniFile->value("/SAMPLING_flow_speed/Divide").toUInt();
-    calculate_485[3].add = MainWindow::iniFile->value("/SAMPLING_flow_speed/Add").toUInt();
-    calculate_485[3].subtract = MainWindow::iniFile->value("/SAMPLING_flow_speed/Subtract").toUInt();
+    ui->lineEdit_multipy->setText(MainWindow::iniFile->value("/SAMPLING_Water/Multipy").toString());
+    ui->lineEdit_divide->setText(MainWindow::iniFile->value("/SAMPLING_Water/Divide").toString());
+    ui->lineEdit_add->setText(MainWindow::iniFile->value("/SAMPLING_Water/Add").toString());
+    ui->lineEdit_subtract->setText(MainWindow::iniFile->value("/SAMPLING_Water/Subtract").toString());
+
+    calculate_485[0].multipy = MainWindow::iniFile->value("/SAMPLING_Water/Multipy").toDouble();
+    calculate_485[0].divide = MainWindow::iniFile->value("/SAMPLING_Water/Divide").toDouble();
+    calculate_485[0].add = MainWindow::iniFile->value("/SAMPLING_Water/Add").toDouble();
+    calculate_485[0].subtract = MainWindow::iniFile->value("/SAMPLING_Water/Subtract").toDouble();
+    calculate_485[1].multipy = MainWindow::iniFile->value("/SAMPLING_flow_inst/Multipy").toDouble();
+    calculate_485[1].divide = MainWindow::iniFile->value("/SAMPLING_flow_inst/Divide").toDouble();
+    calculate_485[1].add = MainWindow::iniFile->value("/SAMPLING_flow_inst/Add").toDouble();
+    calculate_485[1].subtract = MainWindow::iniFile->value("/SAMPLING_flow_inst/Subtract").toDouble();
+    calculate_485[2].multipy = MainWindow::iniFile->value("/SAMPLING_flow_total/Multipy").toDouble();
+    calculate_485[2].divide = MainWindow::iniFile->value("/SAMPLING_flow_total/Divide").toDouble();
+    calculate_485[2].add = MainWindow::iniFile->value("/SAMPLING_flow_total/Add").toDouble();
+    calculate_485[2].subtract = MainWindow::iniFile->value("/SAMPLING_flow_total/Subtract").toDouble();
+    calculate_485[3].multipy = MainWindow::iniFile->value("/SAMPLING_flow_speed/Multipy").toDouble();
+    calculate_485[3].divide = MainWindow::iniFile->value("/SAMPLING_flow_speed/Divide").toDouble();
+    calculate_485[3].add = MainWindow::iniFile->value("/SAMPLING_flow_speed/Add").toDouble();
+    calculate_485[3].subtract = MainWindow::iniFile->value("/SAMPLING_flow_speed/Subtract").toDouble();
 
     data_result.data_water_base_value = MainWindow::iniFile->value("/ALARM/Water_base").toDouble();//水位基值
     data_result.data_water_modify_value = MainWindow::iniFile->value("/ALARM/Water_modify").toDouble();//水位修正值
@@ -416,7 +468,7 @@ bool canshu_widget::eventFilter(QObject *watch, QEvent *evn)
     }
     if ((watch == ui->lineEdit_station_addr) && evn->type() == QEvent::MouseButtonPress)
     {
-        callKeyBoard(ui->lineEdit_station_addr);
+        callKeyBoard_ABC(ui->lineEdit_station_addr);
     }
     if ((watch == ui->lineEdit_report_password) && evn->type() == QEvent::MouseButtonPress)
     {
@@ -466,6 +518,18 @@ bool canshu_widget::eventFilter(QObject *watch, QEvent *evn)
     {
         callKeyBoard(ui->lineEdit_rain_ratio);
     }
+    if ((watch == ui->lineEdit_power2flow_fdjxl) && evn->type() == QEvent::MouseButtonPress)
+    {
+        callKeyBoard(ui->lineEdit_power2flow_fdjxl);
+    }
+    if ((watch == ui->lineEdit_power2flow_sljst) && evn->type() == QEvent::MouseButtonPress)
+    {
+        callKeyBoard(ui->lineEdit_power2flow_sljst);
+    }
+    if ((watch == ui->lineEdit_power2flow_sljxl) && evn->type() == QEvent::MouseButtonPress)
+    {
+        callKeyBoard(ui->lineEdit_power2flow_sljxl);
+    }
 
     return QWidget::eventFilter(watch,evn);
 }
@@ -488,6 +552,27 @@ void canshu_widget::callKeyBoard(QLineEdit *a)
         keyBoard = new KeyBoard(0, a);
         keyBoard->setGeometry(298, 130, 180, 140);
         keyBoard->show();
+    }
+}
+
+void canshu_widget::callKeyBoard_ABC(QLineEdit *a)
+{
+    if(KeyBoard_ABC_Code==false)
+    {
+        keyBoard_ABC = new KeyBoard_ABC(0, a);
+        keyBoard_ABC->setGeometry(0, 120, 476, 150);
+        keyBoard_ABC->show();
+        KeyBoard_ABC_Code=true;
+    }
+    else
+    {
+        if(keyBoard_ABC_flag==true)
+        {
+            keyBoard_ABC->close();
+        }
+        keyBoard_ABC = new KeyBoard_ABC(0, a);
+        keyBoard_ABC->setGeometry(2, 120, 476, 150);
+        keyBoard_ABC->show();
     }
 }
 
@@ -530,13 +615,6 @@ void canshu_widget::canshu_button_init(QPushButton *button_init)
             "padding: 2px;"
         "}"
 
-        /**鼠标停留在按钮上的样式**/
-        "QPushButton::hover{"
-            "color: #FFFFFF;"
-            "background-color: #718093;"
-            "border-color: #2f3640;"
-        "}"
-
         /**鼠标按压下去的样式**/
         "QPushButton::pressed,QPushButton::checked{"
             "color: #FFFFFF;"
@@ -545,9 +623,9 @@ void canshu_widget::canshu_button_init(QPushButton *button_init)
 
         /**按钮失能情况下样式**/
         "QPushButton::disabled{"
-            "color: #FFFFFF;"
-            "background-color: #dcdde1;"
-            "border-color: #dcdde1;"
+        "color: #2f3640;"
+        "background-color: #f5f6fa;"
+        "border-color: #2f3640;"
         "}"
     );
 }
@@ -1013,10 +1091,10 @@ void canshu_widget::on_save_Button_sampling_clicked()
         MainWindow::iniFile->setValue("/SAMPLING_Water/Divide",ui->lineEdit_divide->text());
         MainWindow::iniFile->setValue("/SAMPLING_Water/Add",ui->lineEdit_add->text());
         MainWindow::iniFile->setValue("/SAMPLING_Water/Subtract",ui->lineEdit_subtract->text());
-        calculate_485[0].multipy = ui->lineEdit_multipy->text().toUShort();
-        calculate_485[0].divide = ui->lineEdit_divide->text().toUShort();
-        calculate_485[0].add = ui->lineEdit_add->text().toUShort();
-        calculate_485[0].subtract = ui->lineEdit_subtract->text().toUShort();
+        calculate_485[0].multipy = ui->lineEdit_multipy->text().toDouble();
+        calculate_485[0].divide = ui->lineEdit_divide->text().toDouble();
+        calculate_485[0].add = ui->lineEdit_add->text().toDouble();
+        calculate_485[0].subtract = ui->lineEdit_subtract->text().toDouble();
 
         MainWindow::iniFile->setValue("/ALARM/Water_base",ui->lineEdit_water_base->text());//水位基值
         MainWindow::iniFile->setValue("/ALARM/Water_modify",ui->lineEdit_water_modify->text());//水位修正值
@@ -1029,10 +1107,10 @@ void canshu_widget::on_save_Button_sampling_clicked()
         MainWindow::iniFile->setValue("/SAMPLING_flow_inst/Divide",ui->lineEdit_divide->text());
         MainWindow::iniFile->setValue("/SAMPLING_flow_inst/Add",ui->lineEdit_add->text());
         MainWindow::iniFile->setValue("/SAMPLING_flow_inst/Subtract",ui->lineEdit_subtract->text());
-        calculate_485[1].multipy = ui->lineEdit_multipy->text().toUShort();
-        calculate_485[1].divide = ui->lineEdit_divide->text().toUShort();
-        calculate_485[1].add = ui->lineEdit_add->text().toUShort();
-        calculate_485[1].subtract = ui->lineEdit_subtract->text().toUShort();
+        calculate_485[1].multipy = ui->lineEdit_multipy->text().toDouble();
+        calculate_485[1].divide = ui->lineEdit_divide->text().toDouble();
+        calculate_485[1].add = ui->lineEdit_add->text().toDouble();
+        calculate_485[1].subtract = ui->lineEdit_subtract->text().toDouble();
     }
     else if(ui->comboBox_485->currentText() == "累计流量")
     {
@@ -1040,10 +1118,10 @@ void canshu_widget::on_save_Button_sampling_clicked()
         MainWindow::iniFile->setValue("/SAMPLING_flow_total/Divide",ui->lineEdit_divide->text());
         MainWindow::iniFile->setValue("/SAMPLING_flow_total/Add",ui->lineEdit_add->text());
         MainWindow::iniFile->setValue("/SAMPLING_flow_total/Subtract",ui->lineEdit_subtract->text());
-        calculate_485[2].multipy = ui->lineEdit_multipy->text().toUShort();
-        calculate_485[2].divide = ui->lineEdit_divide->text().toUShort();
-        calculate_485[2].add = ui->lineEdit_add->text().toUShort();
-        calculate_485[2].subtract = ui->lineEdit_subtract->text().toUShort();
+        calculate_485[2].multipy = ui->lineEdit_multipy->text().toDouble();
+        calculate_485[2].divide = ui->lineEdit_divide->text().toDouble();
+        calculate_485[2].add = ui->lineEdit_add->text().toDouble();
+        calculate_485[2].subtract = ui->lineEdit_subtract->text().toDouble();
     }
     else
     {
@@ -1051,10 +1129,10 @@ void canshu_widget::on_save_Button_sampling_clicked()
         MainWindow::iniFile->setValue("/SAMPLING_flow_speed/Divide",ui->lineEdit_divide->text());
         MainWindow::iniFile->setValue("/SAMPLING_flow_speed/Add",ui->lineEdit_add->text());
         MainWindow::iniFile->setValue("/SAMPLING_flow_speed/Subtract",ui->lineEdit_subtract->text());
-        calculate_485[3].multipy = ui->lineEdit_multipy->text().toUShort();
-        calculate_485[3].divide = ui->lineEdit_divide->text().toUShort();
-        calculate_485[3].add = ui->lineEdit_add->text().toUShort();
-        calculate_485[3].subtract = ui->lineEdit_subtract->text().toUShort();
+        calculate_485[3].multipy = ui->lineEdit_multipy->text().toDouble();
+        calculate_485[3].divide = ui->lineEdit_divide->text().toDouble();
+        calculate_485[3].add = ui->lineEdit_add->text().toDouble();
+        calculate_485[3].subtract = ui->lineEdit_subtract->text().toDouble();
     }
 
     MainWindow::iniFile->setValue("/RAIN/Ratio1",ui->lineEdit_rain_ratio->text());
@@ -1109,64 +1187,14 @@ void canshu_widget::on_comboBox_485_num_currentIndexChanged(const QString &arg1)
     }
 }
 
-void canshu_widget::on_clear_Button_485_clicked()
-{
-    QString uart_com = "";
-    if(ui->PortBox->currentText() == "COM1")
-        uart_com = "/UART1/";
-    if(ui->PortBox->currentText() == "COM2")
-        uart_com = "/UART2/";
-    if(ui->PortBox->currentText() == "COM3")
-        uart_com = "/UART3/";
-
-    if(ui->comboBox_485_num->currentText() == "1")
-    {
-        MainWindow::iniFile->setValue(uart_com + "Identify1",0);
-        MainWindow::iniFile->setValue(uart_com + "Fun_code1",0);
-        MainWindow::iniFile->setValue(uart_com + "Reg_addr1","");
-        MainWindow::iniFile->setValue(uart_com + "Reg_count1",0);
-        MainWindow::iniFile->setValue(uart_com + "Data_type1",0);
-        MainWindow::iniFile->setValue(uart_com + "Data_format1",0);
-    }
-    else if(ui->comboBox_485_num->currentText() == "2")
-    {
-        MainWindow::iniFile->setValue(uart_com + "Identify2",0);
-        MainWindow::iniFile->setValue(uart_com + "Fun_code2",0);
-        MainWindow::iniFile->setValue(uart_com + "Reg_addr2","");
-        MainWindow::iniFile->setValue(uart_com + "Reg_count2",0);
-        MainWindow::iniFile->setValue(uart_com + "Data_type2",0);
-        MainWindow::iniFile->setValue(uart_com + "Data_format2",0);
-    }
-    else if(ui->comboBox_485_num->currentText() == "3")
-    {
-        MainWindow::iniFile->setValue(uart_com + "Identify3",0);
-        MainWindow::iniFile->setValue(uart_com + "Fun_code3",0);
-        MainWindow::iniFile->setValue(uart_com + "Reg_addr3","");
-        MainWindow::iniFile->setValue(uart_com + "Reg_count3",0);
-        MainWindow::iniFile->setValue(uart_com + "Data_type3",0);
-        MainWindow::iniFile->setValue(uart_com + "Data_format3",0);
-    }
-    else
-    {
-    }
-
-    ui->comboBox_485_identify->setCurrentIndex(0);
-    ui->comboBox_485_funcode->setCurrentIndex(0);
-    ui->lineEdit_485_regAddr->setText("");
-    ui->comboBox_485_regNum->setCurrentIndex(0);
-    ui->comboBox_485_type->setCurrentIndex(0);
-    ui->comboBox_485_format->setCurrentIndex(0);
-}
-
 void canshu_widget::modbus_comm_init()
 {
-    bool ok;
     modbus[0] = {0x01,//COM1串口号
-                 (uint8_t)MainWindow::iniFile->value("/UART1/ADDR").toString().toInt(&ok,16),//设备地址
+                 (uint8_t)MainWindow::iniFile->value("/UART1/ADDR").toString().toInt(),//设备地址
                  (uint8_t)MainWindow::iniFile->value("/UART1/Protocol").toUInt(),//主从协议
                  {comm_485_identify[MainWindow::iniFile->value("/UART1/Identify1").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART1/Identify2").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART1/Identify3").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART1/Identify4").toUInt()]},//数据标识符
                  {comm_485_fun_code[MainWindow::iniFile->value("/UART1/Fun_code1").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART1/Fun_code2").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART1/Fun_code3").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART1/Fun_code4").toUInt()]},//功能码
-                 {(uint16_t)MainWindow::iniFile->value("/UART1/Reg_addr1").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART1/Reg_addr2").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART1/Reg_addr3").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART1/Reg_addr4").toString().toInt(&ok,16)},//寄存器地址
+                 {(uint16_t)MainWindow::iniFile->value("/UART1/Reg_addr1").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART1/Reg_addr2").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART1/Reg_addr3").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART1/Reg_addr4").toString().toInt()},//寄存器地址
                  {comm_485_reg_count[MainWindow::iniFile->value("/UART1/Reg_count1").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART1/Reg_count2").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART1/Reg_count3").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART1/Reg_count4").toUInt()]},//寄存器数量
                  {(uint8_t)MainWindow::iniFile->value("/UART1/Data_type1").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART1/Data_type2").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART1/Data_type3").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART1/Data_type4").toUInt()},//数据类型
                  {(uint8_t)MainWindow::iniFile->value("/UART1/Data_format1").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART1/Data_format2").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART1/Data_format3").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART1/Data_format4").toUInt()},//数据格式
@@ -1175,11 +1203,11 @@ void canshu_widget::modbus_comm_init()
                  0x00};//待通信处理的数据
 
     modbus[1] = {0x06,//COM2串口号
-                 (uint8_t)MainWindow::iniFile->value("/UART2/ADDR").toString().toInt(&ok,16),//设备地址
+                 (uint8_t)MainWindow::iniFile->value("/UART2/ADDR").toString().toInt(),//设备地址
                  (uint8_t)MainWindow::iniFile->value("/UART2/Protocol").toUInt(),//主从协议
                  {comm_485_identify[MainWindow::iniFile->value("/UART2/Identify1").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART2/Identify2").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART2/Identify3").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART2/Identify4").toUInt()]},//数据标识符
                  {comm_485_fun_code[MainWindow::iniFile->value("/UART2/Fun_code1").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART2/Fun_code2").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART2/Fun_code3").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART2/Fun_code4").toUInt()]},//功能码
-                 {(uint16_t)MainWindow::iniFile->value("/UART2/Reg_addr1").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART2/Reg_addr2").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART2/Reg_addr3").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART2/Reg_addr4").toString().toInt(&ok,16)},//寄存器地址
+                 {(uint16_t)MainWindow::iniFile->value("/UART2/Reg_addr1").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART2/Reg_addr2").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART2/Reg_addr3").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART2/Reg_addr4").toString().toInt()},//寄存器地址
                  {comm_485_reg_count[MainWindow::iniFile->value("/UART2/Reg_count1").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART2/Reg_count2").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART2/Reg_count3").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART2/Reg_count4").toUInt()]},//寄存器数量
                  {(uint8_t)MainWindow::iniFile->value("/UART2/Data_type1").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART2/Data_type2").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART2/Data_type3").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART2/Data_type4").toUInt()},//数据类型
                  {(uint8_t)MainWindow::iniFile->value("/UART2/Data_format1").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART2/Data_format2").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART2/Data_format3").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART2/Data_format4").toUInt()},//数据格式
@@ -1188,11 +1216,11 @@ void canshu_widget::modbus_comm_init()
                  0x00};//待通信处理的数据
 
     modbus[2] = {0x03,//COM3串口号
-                 (uint8_t)MainWindow::iniFile->value("/UART3/ADDR").toString().toInt(&ok,16),//设备地址
+                 (uint8_t)MainWindow::iniFile->value("/UART3/ADDR").toString().toInt(),//设备地址
                  (uint8_t)MainWindow::iniFile->value("/UART3/Protocol").toUInt(),//主从协议
                  {comm_485_identify[MainWindow::iniFile->value("/UART3/Identify1").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART3/Identify2").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART3/Identify3").toUInt()],comm_485_identify[MainWindow::iniFile->value("/UART3/Identify4").toUInt()]},//数据标识符
                  {comm_485_fun_code[MainWindow::iniFile->value("/UART3/Fun_code1").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART3/Fun_code2").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART3/Fun_code3").toUInt()],comm_485_fun_code[MainWindow::iniFile->value("/UART3/Fun_code4").toUInt()]},//功能码
-                 {(uint16_t)MainWindow::iniFile->value("/UART3/Reg_addr1").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART3/Reg_addr2").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART3/Reg_addr3").toString().toInt(&ok,16),(uint16_t)MainWindow::iniFile->value("/UART3/Reg_addr4").toString().toInt(&ok,16)},//寄存器地址
+                 {(uint16_t)MainWindow::iniFile->value("/UART3/Reg_addr1").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART3/Reg_addr2").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART3/Reg_addr3").toString().toInt(),(uint16_t)MainWindow::iniFile->value("/UART3/Reg_addr4").toString().toInt()},//寄存器地址
                  {comm_485_reg_count[MainWindow::iniFile->value("/UART3/Reg_count1").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART3/Reg_count2").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART3/Reg_count3").toUInt()],comm_485_reg_count[MainWindow::iniFile->value("/UART3/Reg_count4").toUInt()]},//寄存器数量
                  {(uint8_t)MainWindow::iniFile->value("/UART3/Data_type1").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART3/Data_type2").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART3/Data_type3").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART3/Data_type4").toUInt()},//数据类型
                  {(uint8_t)MainWindow::iniFile->value("/UART3/Data_format1").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART3/Data_format2").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART3/Data_format3").toUInt(),(uint8_t)MainWindow::iniFile->value("/UART3/Data_format4").toUInt()},//数据格式
@@ -1201,7 +1229,7 @@ void canshu_widget::modbus_comm_init()
                  0x00};//待通信处理的数据
 
     modbus[3] = {0x04,//COM4串口号-开度仪
-                 (uint8_t)MainWindow::iniFile->value("/KDY/ADDR").toString().toInt(&ok,16),//设备地址
+                  (uint8_t)MainWindow::iniFile->value("/KDY/ADDR").toString().toInt(),//设备地址
                  0,//主站协议
                  {0xA1,0xA2,0xFF,0xFF},//数据标识符（A1：开度值  A2：开度仪状态）
                  {0x03,0x03,0,0},//功能码
@@ -1538,5 +1566,102 @@ void canshu_widget::on_comboBox_485_protocol_currentIndexChanged(const QString &
         ui->comboBox_485_regNum->hide();
         ui->comboBox_485_type->hide();
         ui->comboBox_485_format->hide();
+    }
+}
+
+void canshu_widget::on_pushButton_power2flow_save_clicked()
+{
+    //取整
+    bool ok;
+    double floatValue_sljst = ui->lineEdit_power2flow_sljst->text().toDouble(&ok);
+    int sljst = qRound(floatValue_sljst);//四舍五入
+    ui->lineEdit_power2flow_sljst->setText(QString::number(sljst));
+
+    double floatValue_sljxl = ui->lineEdit_power2flow_sljxl->text().toDouble(&ok);
+    int sljxl = qRound(floatValue_sljxl);//四舍五入
+    ui->lineEdit_power2flow_sljxl->setText(QString::number(sljxl));
+
+    double floatValue_fdjxl = ui->lineEdit_power2flow_fdjxl->text().toDouble(&ok);
+    int fdjxl = qRound(floatValue_fdjxl);//四舍五入
+    ui->lineEdit_power2flow_fdjxl->setText(QString::number(fdjxl));
+
+    if(ui->comboBox_power2flow_select->currentText() == "功率变送器1")
+    {
+        QFile file1("/home/power2flow1.txt");
+        if(file1.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+            QString power2flow1_sljst = "sljst1=" + ui->lineEdit_power2flow_sljst->text() + "\n";
+            QString power2flow1_sljxl = "sljxl1=" + ui->lineEdit_power2flow_sljxl->text() + "\n";
+            QString power2flow1_fdjxl = "fdjxl1=" + ui->lineEdit_power2flow_fdjxl->text() + "\n";
+            file1.write(power2flow1_sljst.toUtf8());
+            file1.write(power2flow1_sljxl.toUtf8());
+            file1.write(power2flow1_fdjxl.toUtf8());
+            glbsq[0].sljst = ui->lineEdit_power2flow_sljst->text().toInt();
+            glbsq[0].sljxl = ui->lineEdit_power2flow_sljxl->text().toInt();
+            glbsq[0].fdjxl = ui->lineEdit_power2flow_fdjxl->text().toInt();
+
+            file1.flush();
+            file1.close();
+        }
+    }
+    else if(ui->comboBox_power2flow_select->currentText() == "功率变送器2")
+    {
+        QFile file1("/home/power2flow2.txt");
+        if(file1.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+            QString power2flow1_sljst = "sljst2=" + ui->lineEdit_power2flow_sljst->text() + "\n";
+            QString power2flow1_sljxl = "sljxl2=" + ui->lineEdit_power2flow_sljxl->text() + "\n";
+            QString power2flow1_fdjxl = "fdjxl2=" + ui->lineEdit_power2flow_fdjxl->text() + "\n";
+            file1.write(power2flow1_sljst.toUtf8());
+            file1.write(power2flow1_sljxl.toUtf8());
+            file1.write(power2flow1_fdjxl.toUtf8());
+            glbsq[1].sljst = ui->lineEdit_power2flow_sljst->text().toInt();
+            glbsq[1].sljxl = ui->lineEdit_power2flow_sljxl->text().toInt();
+            glbsq[1].fdjxl = ui->lineEdit_power2flow_fdjxl->text().toInt();
+
+            file1.flush();
+            file1.close();
+        }
+    }
+    else
+    {
+        QFile file1("/home/power2flow3.txt");
+        if(file1.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+            QString power2flow1_sljst = "sljst3=" + ui->lineEdit_power2flow_sljst->text() + "\n";
+            QString power2flow1_sljxl = "sljxl3=" + ui->lineEdit_power2flow_sljxl->text() + "\n";
+            QString power2flow1_fdjxl = "fdjxl3=" + ui->lineEdit_power2flow_fdjxl->text() + "\n";
+            file1.write(power2flow1_sljst.toUtf8());
+            file1.write(power2flow1_sljxl.toUtf8());
+            file1.write(power2flow1_fdjxl.toUtf8());
+            glbsq[2].sljst = ui->lineEdit_power2flow_sljst->text().toInt();
+            glbsq[2].sljxl = ui->lineEdit_power2flow_sljxl->text().toInt();
+            glbsq[2].fdjxl = ui->lineEdit_power2flow_fdjxl->text().toInt();
+
+            file1.flush();
+            file1.close();
+        }
+    }
+}
+
+void canshu_widget::on_comboBox_power2flow_select_currentIndexChanged(const QString &arg1)
+{
+    if(arg1 == "功率变送器1")
+    {
+        ui->lineEdit_power2flow_sljst->setText(QString::number(glbsq[0].sljst));
+        ui->lineEdit_power2flow_sljxl->setText(QString::number(glbsq[0].sljxl));
+        ui->lineEdit_power2flow_fdjxl->setText(QString::number(glbsq[0].fdjxl));
+    }
+    else if(arg1 == "功率变送器2")
+    {
+        ui->lineEdit_power2flow_sljst->setText(QString::number(glbsq[1].sljst));
+        ui->lineEdit_power2flow_sljxl->setText(QString::number(glbsq[1].sljxl));
+        ui->lineEdit_power2flow_fdjxl->setText(QString::number(glbsq[1].fdjxl));
+    }
+    else
+    {
+        ui->lineEdit_power2flow_sljst->setText(QString::number(glbsq[2].sljst));
+        ui->lineEdit_power2flow_sljxl->setText(QString::number(glbsq[2].sljxl));
+        ui->lineEdit_power2flow_fdjxl->setText(QString::number(glbsq[2].fdjxl));
     }
 }

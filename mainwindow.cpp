@@ -20,9 +20,11 @@ extern OSD_flag osd_flag;
 uint8_t log_max_M = 5;//日志最多存5M
 
 #ifdef FLOOD_FLOW
-    QString MainWindow::Version = "XSJ1800RV1.04AD(NM.2024.01234.00)";//专版
+    QString MainWindow::Version = "XSJ1800RV1.04AD(NM.2024.01234.01)";//专版
+#elif POWER2FLOW
+    QString MainWindow::Version = "XSJ1800RV1.04AD(NM.2025.01378.00)";//专版
 #else
-    QString MainWindow::Version = "XSJ1800RV1.03AD";//通用版
+    QString MainWindow::Version = "XSJ1800RV1.06AD";//通用版
 #endif
 
 #ifdef ARM
@@ -47,7 +49,11 @@ void LogMsgOutput(QtMsgType type,const QMessageLogContext &context,const QString
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    qDebug()<<"Version=" << Version;
+#ifdef ARM
+    qDebug()<<"Version=" << Version << "ARM";
+#else
+    qDebug()<<"Version=" << Version << "Windows";
+#endif
     QWidget *widget = new QWidget();
     this->setCentralWidget(widget);
 
@@ -60,7 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
     if(!dir_images3.exists())
         dir_images3.mkpath("/home/images/images3");//创建文件夹
 
-    QFontDatabase::addApplicationFont(":/fonts/fonts/simsun.ttc");//加载字体耗时
+    //QFontDatabase::addApplicationFont(":/fonts/fonts/simsun.ttc");//加载字体耗时
+    QFontDatabase::addApplicationFont("/usr/local/Qt_5.12.5/fonts/simsun.ttf");
 
     QPalette pal =this->palette();
     pal.setBrush(QPalette::Background,QBrush(QPixmap(":/back/image/blue_color_back.png")));
@@ -172,7 +179,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(canshu_widget_page,SIGNAL(kdy_signal(int)),serialport_thread,SLOT(kdy_send_Modbus(int)));//水文协议 开度仪控制
     connect(canshu_widget_page,SIGNAL(SW_test_signal(int)),Tcp_socket,SLOT(report_SW_test(void)));//水文协议 测试报
     connect(serialport_thread,SIGNAL(tcp_alarm_signal(int)),Tcp_socket,SLOT(report_SW_add(void)));//水文协议 告警信号触发加报报
-    connect(xitong_widegt_page,SIGNAL(check_time_signal(int)),Tcp_socket,SLOT(report_SW_test(void)));//水文协议 0点校时
     connect(Tcp_socket,SIGNAL(uploadTime(uint8_t)),canshu_widget_page,SLOT(setUploadTimeToUI(uint8_t)));//水资源协议 刷新定时报时间
     connect(Tcp_socket,SIGNAL(kdy_signal(int)),serialport_thread,SLOT(kdy_send_Modbus(int)));//水资源协议 开度仪启停控制
     connect(xitong_widegt_page,SIGNAL(sysClear(int)),Tcp_socket,SLOT(delete_AllData_Total(void)));//清空历史数据

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'alarmlog_widget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.9
+** Created by: Qt User Interface Compiler version 5.12.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -43,6 +43,10 @@ public:
     QPushButton *pushButton_log;
     QPlainTextEdit *plainTextEdit;
     QPushButton *pushButton_log_clear;
+    QWidget *tab_4;
+    QPlainTextEdit *plainTextEdit_comm_show;
+    QPushButton *pushButton_comm_show;
+    QPushButton *pushButton_comm_clear;
 
     void setupUi(QWidget *alarmLog_widget)
     {
@@ -127,10 +131,25 @@ public:
         pushButton_log_clear->setGeometry(QRect(10, 7, 93, 28));
         pushButton_log_clear->setFocusPolicy(Qt::NoFocus);
         tabWidget->addTab(tab_2, QString());
+        tab_4 = new QWidget();
+        tab_4->setObjectName(QString::fromUtf8("tab_4"));
+        plainTextEdit_comm_show = new QPlainTextEdit(tab_4);
+        plainTextEdit_comm_show->setObjectName(QString::fromUtf8("plainTextEdit_comm_show"));
+        plainTextEdit_comm_show->setGeometry(QRect(110, 11, 252, 171));
+        QFont font3;
+        font3.setPointSize(8);
+        plainTextEdit_comm_show->setFont(font3);
+        pushButton_comm_show = new QPushButton(tab_4);
+        pushButton_comm_show->setObjectName(QString::fromUtf8("pushButton_comm_show"));
+        pushButton_comm_show->setGeometry(QRect(10, 10, 93, 28));
+        pushButton_comm_clear = new QPushButton(tab_4);
+        pushButton_comm_clear->setObjectName(QString::fromUtf8("pushButton_comm_clear"));
+        pushButton_comm_clear->setGeometry(QRect(10, 150, 93, 28));
+        tabWidget->addTab(tab_4, QString());
 
         retranslateUi(alarmLog_widget);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(alarmLog_widget);
@@ -155,6 +174,9 @@ public:
         pushButton_log->setText(QApplication::translate("alarmLog_widget", "\346\230\276\347\244\272\346\227\245\345\277\227", nullptr));
         pushButton_log_clear->setText(QApplication::translate("alarmLog_widget", "\346\270\205\351\231\244\346\227\245\345\277\227", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("alarmLog_widget", "\350\256\276\345\244\207\346\227\245\345\277\227", nullptr));
+        pushButton_comm_show->setText(QApplication::translate("alarmLog_widget", "\346\237\245\347\234\213\351\200\232\344\277\241\345\270\247", nullptr));
+        pushButton_comm_clear->setText(QApplication::translate("alarmLog_widget", "\346\270\205\351\231\244", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("alarmLog_widget", "\345\256\236\346\227\266\351\200\232\344\277\241\345\270\247", nullptr));
     } // retranslateUi
 
 };

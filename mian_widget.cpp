@@ -283,14 +283,28 @@ void mian_widget::refresh_timeout()
     ui->label_leiji_rain_data->setText(QString::number(data_result.data_rain_total,'f',1) + "mm");
     ui->label_current_flow_data->setText(QString::number(data_result.data_flow_inst,'f',3) + "m3/s");
     ui->label_leiji_flow_data->setText(QString::number(data_result.data_flow_total,'f',0) + "m3");
-#ifdef FLOOD_FLOW
-    ui->label_xiehong_flow_data->setText(QString::number(data_result.data_flood_flow,'f',2) + "m3/s");
-#else
-    ui->label_xiehong_flow->hide();
-    ui->label_xiehong_flow_data->hide();
-#endif
     ui->label_shuiwei_data->setText(QString::number(data_result.data_water,'f',2) + "m");
     ui->label_liusu_data->setText(QString::number(data_result.data_flow_speed,'f',2) + "m/s");
+
+//#ifdef FLOOD_FLOW
+//    ui->label_xiehong_flow_data->setText(QString::number(data_result.data_flood_flow,'f',2) + "m3/s");
+//#else
+//    ui->label_xiehong_flow->hide();
+//    ui->label_xiehong_flow_data->hide();
+//#endif
+
+//#ifdef POWER2FLOW
+//    ui->label_power2flow1_data->setText(QString::number(data_result.data_pwoer2flow1,'f',3) + "m3/s");
+//    ui->label_power2flow2_data->setText(QString::number(data_result.data_pwoer2flow2,'f',3) + "m3/s");
+//    ui->label_power2flow3_data->setText(QString::number(data_result.data_pwoer2flow3,'f',3) + "m3/s");
+//#else
+//    ui->label_power2flow1->hide();
+//    ui->label_power2flow1_data->hide();
+//    ui->label_power2flow2->hide();
+//    ui->label_power2flow2_data->hide();
+//    ui->label_power2flow3->hide();
+//    ui->label_power2flow3_data->hide();
+//#endif
 
     if(kdy.unit == "mm")
         ui->label_kdy_data->setText(QString::number(data_result.data_kdy_value,'f',0) + "mm");

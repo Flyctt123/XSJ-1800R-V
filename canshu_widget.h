@@ -19,12 +19,20 @@ typedef struct
     QString unit;
 }KDY;
 
+//功率变送器计算
 typedef struct
 {
-    uint16_t multipy;
-    uint16_t divide;
-    uint16_t add;
-    uint16_t subtract;
+    uint32_t sljst;//水轮机水头
+    uint16_t sljxl;//水轮机效率
+    uint16_t fdjxl;//发电机效率
+}GLBSQ;
+
+typedef struct
+{
+    double multipy;
+    double divide;
+    double add;
+    double subtract;
 }CALCULATE_485;
 
 namespace Ui {
@@ -51,7 +59,7 @@ public slots:
 private slots:
     bool eventFilter(QObject *, QEvent *);
     void callKeyBoard(QLineEdit *a);
-    //void callKeyBoard_ABC(QLineEdit *a);
+    void callKeyBoard_ABC(QLineEdit *a);
     void timerTimeout_second();
     void serial_init(QSerialPort *serial, QString portname, int bundrate);
     void canshu_button_init(QPushButton *button_init);
@@ -73,7 +81,6 @@ private slots:
     void on_radioButton6_cur_clicked();
     void on_save_Button_sampling_clicked();
     void on_comboBox_485_num_currentIndexChanged(const QString &arg1);
-    void on_clear_Button_485_clicked();
 
     void modbus_comm_init();
 
@@ -97,6 +104,10 @@ private slots:
 
     void on_comboBox_485_protocol_currentIndexChanged(const QString &arg1);
 
+    void on_pushButton_power2flow_save_clicked();
+
+    void on_comboBox_power2flow_select_currentIndexChanged(const QString &arg1);
+
 private:
     KeyBoard *keyBoard=nullptr;
     KeyBoard_ABC *keyBoard_ABC=nullptr;
@@ -105,9 +116,9 @@ private:
     QSerialPort *serial_change;
     QTimer *timer;
     uint8_t time_count = 0;
-    uint8_t comm_485_identify[5] = {0x3B,0x27,0x76,0x37,0xFF};//modbus标识符
+    uint8_t comm_485_identify[8] = {0x3B,0x27,0x76,0x37,0xF1,0xF2,0xF3,0xFF};//modbus标识符:0x3B水位、0x27瞬时流量、0x76累计流量、0x37流速、0xF1功率转流量1、0xF2功率转流量2、0xF3功率转流量3、0xFF禁用
     uint8_t comm_485_fun_code[4] = {0x03,0x04,0x06,0x16};//modbus功能码
-    uint16_t comm_485_reg_count[2] = {0x0001,0x0002};//modbus寄存器数量
+    uint16_t comm_485_reg_count[4] = {0x01,0x02,0x03,0x04};//modbus寄存器数量，主要用于设置modbus读取寄存器数量，便于适配传感器帧格式，不支持单帧报文读取多个寄存器
 
 signals:
     void kdy_signal(int);

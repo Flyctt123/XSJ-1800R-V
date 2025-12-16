@@ -132,13 +132,6 @@ void camera_widget::camera_button_init(QPushButton *button_init)
             "padding: 2px;"
         "}"
 
-        /**鼠标停留在按钮上的样式**/
-        "QPushButton::hover{"
-            "color: #FFFFFF;"
-            "background-color: #718093;"
-            "border-color: #2f3640;"
-        "}"
-
         /**鼠标按压下去的样式**/
         "QPushButton::pressed,QPushButton::checked{"
             "color: #FFFFFF;"
@@ -147,9 +140,9 @@ void camera_widget::camera_button_init(QPushButton *button_init)
 
         /**按钮失能情况下样式**/
         "QPushButton::disabled{"
-            "color: #FFFFFF;"
-            "background-color: #dcdde1;"
-            "border-color: #dcdde1;"
+        "color: #2f3640;"
+        "background-color: #f5f6fa;"
+        "border-color: #2f3640;"
         "}"
     );
 }

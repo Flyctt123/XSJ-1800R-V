@@ -12,10 +12,10 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,25 +25,25 @@ class Ui_mian_widget
 public:
     QTabWidget *tabWidget;
     QWidget *tab;
-    QLabel *label_picture;
+    QLabel *label_26;
     QWidget *layoutWidget;
-    QGridLayout *gridLayout;
-    QLabel *label_liusu_data;
-    QLabel *label_current_flow_data;
+    QVBoxLayout *verticalLayout;
     QLabel *label_power;
-    QLabel *label_power_data;
-    QLabel *label_shuiwei_data;
-    QLabel *label_leiji_rain_data;
-    QLabel *label_leiji_flow;
-    QLabel *label_leiji_rain;
-    QLabel *label_current_rain;
-    QLabel *label_liusu;
-    QLabel *label_leiji_flow_data;
     QLabel *label_current_flow;
-    QLabel *label_current_rain_data;
+    QLabel *label_leiji_flow;
     QLabel *label_shuiwei;
-    QLabel *label_xiehong_flow;
-    QLabel *label_xiehong_flow_data;
+    QLabel *label_liusu;
+    QLabel *label_current_rain;
+    QLabel *label_leiji_rain;
+    QWidget *layoutWidget1;
+    QVBoxLayout *verticalLayout_2;
+    QLabel *label_power_data;
+    QLabel *label_current_flow_data;
+    QLabel *label_leiji_flow_data;
+    QLabel *label_shuiwei_data;
+    QLabel *label_liusu_data;
+    QLabel *label_current_rain_data;
+    QLabel *label_leiji_rain_data;
     QWidget *tab_2;
     QGroupBox *groupBox;
     QLabel *label;
@@ -106,118 +106,37 @@ public:
     {
         if (mian_widget->objectName().isEmpty())
             mian_widget->setObjectName(QString::fromUtf8("mian_widget"));
-        mian_widget->resize(381, 219);
+        mian_widget->resize(545, 320);
         mian_widget->setStyleSheet(QString::fromUtf8(""));
         tabWidget = new QTabWidget(mian_widget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(1, 3, 380, 215));
+        tabWidget->setGeometry(QRect(1, 3, 940, 621));
         tabWidget->setFocusPolicy(Qt::NoFocus);
         tabWidget->setStyleSheet(QString::fromUtf8("QWidget:focus {\n"
 "    outline: none;\n"
 "}"));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
-        label_picture = new QLabel(tab);
-        label_picture->setObjectName(QString::fromUtf8("label_picture"));
-        label_picture->setGeometry(QRect(3, 3, 161, 181));
-        label_picture->setStyleSheet(QString::fromUtf8("border-image: url(:/back/image/main.jpg);"));
+        label_26 = new QLabel(tab);
+        label_26->setObjectName(QString::fromUtf8("label_26"));
+        label_26->setGeometry(QRect(10, 10, 161, 171));
+        label_26->setPixmap(QPixmap(QString::fromUtf8(":/back/image/main.jpg")));
+        label_26->setScaledContents(true);
         layoutWidget = new QWidget(tab);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(165, 3, 201, 181));
-        gridLayout = new QGridLayout(layoutWidget);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        gridLayout->setHorizontalSpacing(1);
-        gridLayout->setVerticalSpacing(5);
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        label_liusu_data = new QLabel(layoutWidget);
-        label_liusu_data->setObjectName(QString::fromUtf8("label_liusu_data"));
-        QFont font;
-        font.setPointSize(8);
-        label_liusu_data->setFont(font);
-        label_liusu_data->setStyleSheet(QString::fromUtf8(""));
-        label_liusu_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_liusu_data, 2, 1, 1, 1);
-
-        label_current_flow_data = new QLabel(layoutWidget);
-        label_current_flow_data->setObjectName(QString::fromUtf8("label_current_flow_data"));
-        label_current_flow_data->setFont(font);
-        label_current_flow_data->setStyleSheet(QString::fromUtf8(""));
-        label_current_flow_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_current_flow_data, 3, 1, 1, 1);
-
+        layoutWidget->setGeometry(QRect(180, 10, 72, 171));
+        verticalLayout = new QVBoxLayout(layoutWidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         label_power = new QLabel(layoutWidget);
         label_power->setObjectName(QString::fromUtf8("label_power"));
+        QFont font;
+        font.setPointSize(8);
         label_power->setFont(font);
         label_power->setStyleSheet(QString::fromUtf8(""));
         label_power->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout->addWidget(label_power, 0, 0, 1, 1);
-
-        label_power_data = new QLabel(layoutWidget);
-        label_power_data->setObjectName(QString::fromUtf8("label_power_data"));
-        label_power_data->setFont(font);
-        label_power_data->setStyleSheet(QString::fromUtf8(""));
-        label_power_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_power_data, 0, 1, 1, 1);
-
-        label_shuiwei_data = new QLabel(layoutWidget);
-        label_shuiwei_data->setObjectName(QString::fromUtf8("label_shuiwei_data"));
-        label_shuiwei_data->setFont(font);
-        label_shuiwei_data->setStyleSheet(QString::fromUtf8(""));
-        label_shuiwei_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_shuiwei_data, 1, 1, 1, 1);
-
-        label_leiji_rain_data = new QLabel(layoutWidget);
-        label_leiji_rain_data->setObjectName(QString::fromUtf8("label_leiji_rain_data"));
-        label_leiji_rain_data->setFont(font);
-        label_leiji_rain_data->setStyleSheet(QString::fromUtf8(""));
-        label_leiji_rain_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_leiji_rain_data, 7, 1, 1, 1);
-
-        label_leiji_flow = new QLabel(layoutWidget);
-        label_leiji_flow->setObjectName(QString::fromUtf8("label_leiji_flow"));
-        label_leiji_flow->setFont(font);
-        label_leiji_flow->setStyleSheet(QString::fromUtf8(""));
-        label_leiji_flow->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_leiji_flow, 4, 0, 1, 1);
-
-        label_leiji_rain = new QLabel(layoutWidget);
-        label_leiji_rain->setObjectName(QString::fromUtf8("label_leiji_rain"));
-        label_leiji_rain->setFont(font);
-        label_leiji_rain->setStyleSheet(QString::fromUtf8(""));
-        label_leiji_rain->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_leiji_rain, 7, 0, 1, 1);
-
-        label_current_rain = new QLabel(layoutWidget);
-        label_current_rain->setObjectName(QString::fromUtf8("label_current_rain"));
-        label_current_rain->setFont(font);
-        label_current_rain->setStyleSheet(QString::fromUtf8(""));
-        label_current_rain->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_current_rain, 6, 0, 1, 1);
-
-        label_liusu = new QLabel(layoutWidget);
-        label_liusu->setObjectName(QString::fromUtf8("label_liusu"));
-        label_liusu->setFont(font);
-        label_liusu->setStyleSheet(QString::fromUtf8(""));
-        label_liusu->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_liusu, 2, 0, 1, 1);
-
-        label_leiji_flow_data = new QLabel(layoutWidget);
-        label_leiji_flow_data->setObjectName(QString::fromUtf8("label_leiji_flow_data"));
-        label_leiji_flow_data->setFont(font);
-        label_leiji_flow_data->setStyleSheet(QString::fromUtf8(""));
-        label_leiji_flow_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout->addWidget(label_leiji_flow_data, 4, 1, 1, 1);
+        verticalLayout->addWidget(label_power);
 
         label_current_flow = new QLabel(layoutWidget);
         label_current_flow->setObjectName(QString::fromUtf8("label_current_flow"));
@@ -225,15 +144,15 @@ public:
         label_current_flow->setStyleSheet(QString::fromUtf8(""));
         label_current_flow->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout->addWidget(label_current_flow, 3, 0, 1, 1);
+        verticalLayout->addWidget(label_current_flow);
 
-        label_current_rain_data = new QLabel(layoutWidget);
-        label_current_rain_data->setObjectName(QString::fromUtf8("label_current_rain_data"));
-        label_current_rain_data->setFont(font);
-        label_current_rain_data->setStyleSheet(QString::fromUtf8(""));
-        label_current_rain_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        label_leiji_flow = new QLabel(layoutWidget);
+        label_leiji_flow->setObjectName(QString::fromUtf8("label_leiji_flow"));
+        label_leiji_flow->setFont(font);
+        label_leiji_flow->setStyleSheet(QString::fromUtf8(""));
+        label_leiji_flow->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout->addWidget(label_current_rain_data, 6, 1, 1, 1);
+        verticalLayout->addWidget(label_leiji_flow);
 
         label_shuiwei = new QLabel(layoutWidget);
         label_shuiwei->setObjectName(QString::fromUtf8("label_shuiwei"));
@@ -241,27 +160,96 @@ public:
         label_shuiwei->setStyleSheet(QString::fromUtf8(""));
         label_shuiwei->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout->addWidget(label_shuiwei, 1, 0, 1, 1);
+        verticalLayout->addWidget(label_shuiwei);
 
-        label_xiehong_flow = new QLabel(layoutWidget);
-        label_xiehong_flow->setObjectName(QString::fromUtf8("label_xiehong_flow"));
-        label_xiehong_flow->setFont(font);
-        label_xiehong_flow->setStyleSheet(QString::fromUtf8(""));
-        label_xiehong_flow->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_liusu = new QLabel(layoutWidget);
+        label_liusu->setObjectName(QString::fromUtf8("label_liusu"));
+        label_liusu->setFont(font);
+        label_liusu->setStyleSheet(QString::fromUtf8(""));
+        label_liusu->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout->addWidget(label_xiehong_flow, 5, 0, 1, 1);
+        verticalLayout->addWidget(label_liusu);
 
-        label_xiehong_flow_data = new QLabel(layoutWidget);
-        label_xiehong_flow_data->setObjectName(QString::fromUtf8("label_xiehong_flow_data"));
-        label_xiehong_flow_data->setFont(font);
-        label_xiehong_flow_data->setStyleSheet(QString::fromUtf8(""));
-        label_xiehong_flow_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        label_current_rain = new QLabel(layoutWidget);
+        label_current_rain->setObjectName(QString::fromUtf8("label_current_rain"));
+        label_current_rain->setFont(font);
+        label_current_rain->setStyleSheet(QString::fromUtf8(""));
+        label_current_rain->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayout->addWidget(label_xiehong_flow_data, 5, 1, 1, 1);
+        verticalLayout->addWidget(label_current_rain);
+
+        label_leiji_rain = new QLabel(layoutWidget);
+        label_leiji_rain->setObjectName(QString::fromUtf8("label_leiji_rain"));
+        label_leiji_rain->setFont(font);
+        label_leiji_rain->setStyleSheet(QString::fromUtf8(""));
+        label_leiji_rain->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        verticalLayout->addWidget(label_leiji_rain);
+
+        layoutWidget1 = new QWidget(tab);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(265, 8, 101, 171));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget1);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        label_power_data = new QLabel(layoutWidget1);
+        label_power_data->setObjectName(QString::fromUtf8("label_power_data"));
+        label_power_data->setFont(font);
+        label_power_data->setStyleSheet(QString::fromUtf8(""));
+        label_power_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout_2->addWidget(label_power_data);
+
+        label_current_flow_data = new QLabel(layoutWidget1);
+        label_current_flow_data->setObjectName(QString::fromUtf8("label_current_flow_data"));
+        label_current_flow_data->setFont(font);
+        label_current_flow_data->setStyleSheet(QString::fromUtf8(""));
+        label_current_flow_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout_2->addWidget(label_current_flow_data);
+
+        label_leiji_flow_data = new QLabel(layoutWidget1);
+        label_leiji_flow_data->setObjectName(QString::fromUtf8("label_leiji_flow_data"));
+        label_leiji_flow_data->setFont(font);
+        label_leiji_flow_data->setStyleSheet(QString::fromUtf8(""));
+        label_leiji_flow_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout_2->addWidget(label_leiji_flow_data);
+
+        label_shuiwei_data = new QLabel(layoutWidget1);
+        label_shuiwei_data->setObjectName(QString::fromUtf8("label_shuiwei_data"));
+        label_shuiwei_data->setFont(font);
+        label_shuiwei_data->setStyleSheet(QString::fromUtf8(""));
+        label_shuiwei_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout_2->addWidget(label_shuiwei_data);
+
+        label_liusu_data = new QLabel(layoutWidget1);
+        label_liusu_data->setObjectName(QString::fromUtf8("label_liusu_data"));
+        label_liusu_data->setFont(font);
+        label_liusu_data->setStyleSheet(QString::fromUtf8(""));
+        label_liusu_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout_2->addWidget(label_liusu_data);
+
+        label_current_rain_data = new QLabel(layoutWidget1);
+        label_current_rain_data->setObjectName(QString::fromUtf8("label_current_rain_data"));
+        label_current_rain_data->setFont(font);
+        label_current_rain_data->setStyleSheet(QString::fromUtf8(""));
+        label_current_rain_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout_2->addWidget(label_current_rain_data);
+
+        label_leiji_rain_data = new QLabel(layoutWidget1);
+        label_leiji_rain_data->setObjectName(QString::fromUtf8("label_leiji_rain_data"));
+        label_leiji_rain_data->setFont(font);
+        label_leiji_rain_data->setStyleSheet(QString::fromUtf8(""));
+        label_leiji_rain_data->setMidLineWidth(0);
+        label_leiji_rain_data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout_2->addWidget(label_leiji_rain_data);
 
         tabWidget->addTab(tab, QString());
-        layoutWidget->raise();
-        label_picture->raise();
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
         groupBox = new QGroupBox(tab_2);
@@ -529,23 +517,21 @@ public:
     void retranslateUi(QWidget *mian_widget)
     {
         mian_widget->setWindowTitle(QApplication::translate("mian_widget", "Form", nullptr));
-        label_picture->setText(QString());
-        label_liusu_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m/s</span></p></body></html>", nullptr));
-        label_current_flow_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m3/s</span></p></body></html>", nullptr));
+        label_26->setText(QString());
         label_power->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\347\224\265\345\216\213\357\274\232</span></p></body></html>", nullptr));
-        label_power_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- V</span></p></body></html>", nullptr));
-        label_shuiwei_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m</span></p></body></html>", nullptr));
-        label_leiji_rain_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- mm</span></p></body></html>", nullptr));
-        label_leiji_flow->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\347\264\257\350\256\241\346\265\201\351\207\217\357\274\232</span></p></body></html>", nullptr));
-        label_leiji_rain->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\347\264\257\350\256\241\351\233\250\351\207\217\357\274\232</span></p></body></html>", nullptr));
-        label_current_rain->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\345\275\223\345\211\215\351\233\250\351\207\217\357\274\232</span></p></body></html>", nullptr));
-        label_liusu->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\346\265\201\351\200\237\357\274\232</span></p></body></html>", nullptr));
-        label_leiji_flow_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m3/s</span></p></body></html>", nullptr));
         label_current_flow->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\347\236\254\346\227\266\346\265\201\351\207\217\357\274\232</span></p></body></html>", nullptr));
-        label_current_rain_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- mm</span></p></body></html>", nullptr));
+        label_leiji_flow->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\347\264\257\350\256\241\346\265\201\351\207\217\357\274\232</span></p></body></html>", nullptr));
         label_shuiwei->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\346\260\264\344\275\215\357\274\232</span></p></body></html>", nullptr));
-        label_xiehong_flow->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\346\263\204\346\264\252\346\265\201\351\207\217\357\274\232</span></p></body></html>", nullptr));
-        label_xiehong_flow_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m3/s</span></p></body></html>", nullptr));
+        label_liusu->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\346\265\201\351\200\237\357\274\232</span></p></body></html>", nullptr));
+        label_current_rain->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\345\275\223\345\211\215\351\233\250\351\207\217\357\274\232</span></p></body></html>", nullptr));
+        label_leiji_rain->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">\347\264\257\350\256\241\351\233\250\351\207\217\357\274\232</span></p></body></html>", nullptr));
+        label_power_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- V</span></p></body></html>", nullptr));
+        label_current_flow_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m3/s</span></p></body></html>", nullptr));
+        label_leiji_flow_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m3/s</span></p></body></html>", nullptr));
+        label_shuiwei_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m</span></p></body></html>", nullptr));
+        label_liusu_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- m/s</span></p></body></html>", nullptr));
+        label_current_rain_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- mm</span></p></body></html>", nullptr));
+        label_leiji_rain_data->setText(QApplication::translate("mian_widget", "<html><head/><body><p><span style=\" font-weight:600;\">--- mm</span></p></body></html>", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("mian_widget", "\345\237\272\346\234\254\345\217\202\346\225\260", nullptr));
         groupBox->setTitle(QApplication::translate("mian_widget", "\345\274\200\345\205\245\347\212\266\346\200\201", nullptr));
         label->setText(QApplication::translate("mian_widget", "DI1:", nullptr));
